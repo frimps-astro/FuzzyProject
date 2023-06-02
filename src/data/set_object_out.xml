@@ -1,6 +1,5 @@
-<?xml version="1.0" ?>
 <SetObject size="4">
 	<Elements>
-    a,b,c,d
-  	</Elements>
+		a,b,c,d
+	</Elements>
 </SetObject>

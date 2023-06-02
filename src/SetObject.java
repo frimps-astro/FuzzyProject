@@ -6,42 +6,32 @@ import java.io.*;
 import java.text.MessageFormat;
 import java.util.Arrays;
 
-public class SetObject implements XMLObject, XMLNodeConverter {
-    private int numElements;
-    private String[] elementNames;
+public class SetObject implements XMLObject {
+    private final int numElements;
+    private final String[] elementNames;
+
+    public SetObject(int numElements, String[] elementNames) {
+        this.numElements = numElements;
+        this.elementNames = elementNames;
+    }
 
     public static SetObject load(String filename) {
         //load from xml file
         XMLReader<SetObject> reader = new XMLReader<>();
         reader.setXMLSchema(System.getProperty("user.dir") + "/src/data/set_object.xsd");
-        reader.setXMLNodeConverter(new SetObject());
+        reader.setXMLNodeConverter(new XMLNodeConverter<>());
 
         return reader.readXML(new File(filename));
     }
 
     public void save(String filename) throws IOException {
         //save as xml
-        XMLStreamWriter writer = XMLWriter.createXmlDocument(filename);
+        FileWriter writer = new FileWriter(filename);
+
         try {
-            writer.writeStartDocument();
-            writer.writeCharacters("\n");
-            writer.writeStartElement("SetObject");
-            writer.writeAttribute("size", MessageFormat.format("{0}", numElements));
-
-            //Write Elements node
-            writer.writeCharacters("\n\t");
-            writer.writeStartElement("Elements");
-            writer.writeCharacters(Arrays.stream(elementNames)
-                    .reduce("%s,%s"::formatted).orElse(""));
-
-            writer.writeCharacters("\t");
-            writer.writeEndElement(); //end Elements node
-            writer.writeCharacters("\n");
-
-            writer.writeEndElement(); //End SetObject node
-            writer.writeEndDocument();
+            writer.write(toXMLString());
             writer.close();
-        } catch (XMLStreamException e) {
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
@@ -55,16 +45,27 @@ public class SetObject implements XMLObject, XMLNodeConverter {
 
     @Override
     public String toXMLString() {
-        return "Number of Elements: "+numElements+" elements: "+Arrays.toString(elementNames);
+        StringBuilder setObjectXML = new StringBuilder();
+
+        setObjectXML.append("<SetObject size=\"").append(numElements).append("\">\n");
+
+        //Elements
+        setObjectXML.append("\t<Elements>\n\t\t");
+        setObjectXML.append(Arrays.toString(elementNames)
+                //remove extra characters and white spaces
+                .replace("[","")
+                .replace("]","")
+                .replace(" ",""));
+        setObjectXML.append("\n\t</Elements>\n");
+
+        setObjectXML.append("</SetObject>"); //end root node
+
+        return setObjectXML.toString();
+
     }
 
-    @Override
-    public SetObject convertXMLNode(Node node) {
-        SetObject setObject = new SetObject();
-        setObject.numElements = XMLTools.getIntAttribute(node, "size");
-        setObject.elementNames = node.getTextContent().split(",");
-
-        return setObject;
+    public String toString() {
+        return "Number of Elements: " + numElements + " elements: " + Arrays.toString(elementNames);
     }
 }
 

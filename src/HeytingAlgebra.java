@@ -6,16 +6,18 @@ import org.w3c.dom.NodeList;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.List;
 
-public class HeytingAlgebra implements XMLObject, XMLNodeConverter {
-    private  int numElements;
-    private  String[] elementNames;
-    private  int[][] meet;
-    private  int[][] join;
+public class HeytingAlgebra implements XMLObject {
+    private final  int numElements;
+    private  final String[] elementNames;
+    private  final int[][] meet;
+    private  final int[][] join;
     private  int[][] impl;
     private  int bot;
     private  int top;
@@ -28,75 +30,59 @@ public class HeytingAlgebra implements XMLObject, XMLNodeConverter {
         return elementNames;
     }
 
-    public int[][] getMeet() {
-        return meet;
+    public int getMeet(int x, int y) {
+        return meet[x][y];
     }
 
-    public int[][] getJoin() {
-        return join;
+    public int getJoin(int x, int y) {
+        return join[x][y];
+    }
+
+    public int getImpl(int x, int y) {
+        return impl[x][y];
+    }
+
+    public int getBot() {
+        return bot;
+    }
+
+    public int getTop() {
+        return top;
+    }
+
+    public HeytingAlgebra(int numElements, String[] elementNames, int[][] meet, int[][] join) {
+        this.numElements = numElements;
+        this.elementNames = elementNames;
+        this.meet = meet;
+        this.join = join;
+
+        //call to compute impl, bot and top values
+        computeImpl();
+        computeBotTop();
     }
 
     public static HeytingAlgebra load(String filename) {
         //load from xml file
         XMLReader<HeytingAlgebra> reader = new XMLReader<>();
         reader.setXMLSchema(System.getProperty("user.dir") + "/src/data/heyting.xsd");
-        reader.setXMLNodeConverter(new HeytingAlgebra());
+        reader.setXMLNodeConverter(new XMLNodeConverter<>());
 
         return reader.readXML(new File(filename));
     }
 
     public void save(String filename) throws IOException {
         //save as xml
-        XMLStreamWriter writer = XMLWriter.createXmlDocument(filename);
-        List<String> elementLists = Arrays.stream(elementNames).toList();
-        StringBuilder nodeText = new StringBuilder();
+        FileWriter writer = new FileWriter(filename);
 
         try {
-            writer.writeStartDocument();
-            writer.writeCharacters("\n");
-            writer.writeStartElement("HeytingAlgebra");
-            writer.writeAttribute("size", MessageFormat.format("{0}", numElements));
-
-            //Write Elements node
-            writer.writeCharacters("\n\t");
-            writer.writeStartElement("Elements");
-            writer.writeCharacters("\n\t\t");
-            writer.writeCharacters(Arrays.stream(elementNames).reduce("%s,%s"::formatted).orElse(""));
-
-            writer.writeCharacters("\n\t");
-            writer.writeEndElement(); //end Elements node
-
-            //Write Meet node
-            writeMeetJoin(writer, meet, "Meet", elementLists, nodeText);
-
-            // Write Join node
-            writeMeetJoin(writer, join, "Join", elementLists, nodeText);
-
-            writer.writeCharacters("\n");
-            writer.writeEndElement(); //End HeytingAlgebra node
-            writer.writeEndDocument();
+            writer.write(toXMLString());
             writer.close();
-        } catch (XMLStreamException e) {
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
     }
 
-    private static void writeMeetJoin(XMLStreamWriter writer, int[][] dataArray, String node,
-                                      List<String> elementLists, StringBuilder nodeText)
-            throws XMLStreamException {
-
-        writer.writeCharacters("\n\t");
-        writer.writeStartElement(node);
-        for (int[] data:dataArray) {
-            Arrays.stream(data).forEach(i -> nodeText.append(elementLists.get(i)).append(","));
-            writer.writeCharacters("\n\t\t" + nodeText);
-            nodeText.setLength(0); //clear text for next iteration
-        }
-        writer.writeCharacters("\n\t");
-        writer.writeEndElement(); //end Join node
-    }
-
-    public boolean leq(int x, int y){
+    private boolean leq(int x, int y){
         //check whether the two elements satisfy meet[x][y] =x
        try {
            if ((x < -1 || x > numElements) || (y < -1 || y > numElements))
@@ -104,7 +90,7 @@ public class HeytingAlgebra implements XMLObject, XMLNodeConverter {
 
            return meet[x][y] == x;
        }catch (Exception ex){
-           System.out.println("leq method exception message: "+ex.getMessage());
+           System.out.println("leq method exception message: " + ex.getMessage());
        }
        return false;
     }
@@ -113,82 +99,69 @@ public class HeytingAlgebra implements XMLObject, XMLNodeConverter {
     public String toXMLString() {
         StringBuilder joinStr = new StringBuilder();
         StringBuilder meetStr = new StringBuilder();
+        List<String> elementLists = Arrays.stream(elementNames).toList();
+
+        for (int i = 0; i < numElements; i++) {
+            for (int j = 0; j < numElements; j++) {
+                joinStr.append(elementLists.get(join[i][j])).append(",");
+                meetStr.append(elementLists.get(meet[i][j])).append(",");
+            }
+            joinStr.append("\n\t\t");
+            meetStr.append("\n\t\t");
+        }
+
+        StringBuilder heytingXML = new StringBuilder();
+        //start root node
+        heytingXML.append("<HeytingAlgebra size=\"").append(numElements).append("\">\n");
+
+        //Elements
+        heytingXML.append("\t<Elements>\n\t\t");
+        heytingXML.append(Arrays.toString(elementNames)
+                //remove extra characters and white spaces
+                .replace("[","")
+                .replace("]","")
+                .replace(" ",""));
+        heytingXML.append("\n\t</Elements>\n");
+
+        //Meet :remove trailing ","
+        meetStr = new StringBuilder(meetStr.deleteCharAt(meetStr.lastIndexOf(",")));
+        heytingXML.append("\t<Meet>\n\t\t");
+        heytingXML.append(meetStr.toString().strip());
+        heytingXML.append("\n\t</Meet>\n");
+
+        //Join :remove trailing ","
+        joinStr = new StringBuilder(joinStr.deleteCharAt(joinStr.lastIndexOf(",")));
+        heytingXML.append("\t<Join>\n\t\t");
+        heytingXML.append(joinStr.toString().strip());
+        heytingXML.append("\n\t</Join>\n");
+
+        heytingXML.append("</HeytingAlgebra>"); //end root node
+
+        return heytingXML.toString();
+    }
+    public String toString() {
+        StringBuilder joinStr = new StringBuilder();
+        StringBuilder meetStr = new StringBuilder();
+        StringBuilder implStr = new StringBuilder();
         for (int i = 0; i < numElements; i++) {
             for (int j = 0; j < numElements; j++) {
                 joinStr.append(join[i][j]).append(",");
                 meetStr.append(meet[i][j]).append(",");
+                implStr.append(impl[i][j]).append(",");
             }
             joinStr.append("\n");
             meetStr.append("\n");
+            implStr.append("\n");
         }
-        return "Number of Elements: "+numElements+" elements: "+ Arrays.toString(elementNames)
-                +"\nmeet:\n"+meetStr +"\njoin:\n"+joinStr
-                +"\nbot: "+bot+" top: "+top;
+        return "Number of Elements: " + numElements + " elements: " + Arrays.toString(elementNames)
+                + "\nmeet:\n" + meetStr + "\njoin:\n" + joinStr
+                + "\nimpl:\n" + implStr
+                + "\nbot: " + bot + " top: " + top;
     }
 
-    @Override
-    public HeytingAlgebra convertXMLNode(Node node) {
-        HeytingAlgebra heytingAlgebra = new HeytingAlgebra();
-        heytingAlgebra.numElements = XMLTools.getIntAttribute(node, "size");
-
-        //convert elements, meet, and join to their corresponding int values
-        elementsMeetJoin(node, heytingAlgebra);
-        computeBotTop(heytingAlgebra);
-
-        return heytingAlgebra;
-    }
-
-    private void elementsMeetJoin(Node node, HeytingAlgebra heytingAlgebra){
-        String[] meet_ = null;
-        String[] join_ = null;
-        String[] elements = null;
-
-        NodeList nodeList = node.getChildNodes();
-        for (int i = 0; i < nodeList.getLength(); i++) {
-            Node n = nodeList.item(i);
-            if (n.getNodeName().equalsIgnoreCase("elements")) {
-                elements = n.getTextContent().strip().split(",");
-            }
-
-            //for meet and join split using \n to get each line
-            if (n.getNodeName().equalsIgnoreCase("meet")) {
-                meet_ = n.getTextContent().strip().split("\n");
-            }
-            if (n.getNodeName().equalsIgnoreCase("join")) {
-                join_ = n.getTextContent().strip().split("\n");
-            }
-        }
-
-        heytingAlgebra.elementNames = elements;
-
-        //instantiate class field variables
-        heytingAlgebra.meet = new int[heytingAlgebra.numElements][heytingAlgebra.numElements];
-        heytingAlgebra.join = new int[heytingAlgebra.numElements][heytingAlgebra.numElements];
-
-        try{
-            if (meet_ == null || meet_[0].isBlank() || join_ == null || join_[0].isBlank()
-                    || elements == null || elements[0].isBlank())
-                throw new EmptyNodesException("XML cannot have Elements, Meet or Join empty nodes");
-
-            //convert elements to a string list for easy index computations
-            List<String> elementLists = Arrays.stream(elements).toList();
-
-            for (int j = 0; j < heytingAlgebra.numElements; j++) {
-                String[] meetData = meet_[j].strip().split(",");
-                String[] joinData = join_[j].strip().split(",");
-                for (int i = 0; i < heytingAlgebra.numElements; i++) {
-                    heytingAlgebra.meet[j][i] = elementLists.indexOf(meetData[i]);
-                    heytingAlgebra.join[j][i] = elementLists.indexOf(joinData[i]);
-                }
-            }
-        } catch (Exception ex){
-            System.out.println(ex.getMessage());
-        }
-    }
-
-    private void computeBotTop(HeytingAlgebra heytingAlgebra){
+    private void computeBotTop(){
         //computing bot and top
-        List<String> elementLists = Arrays.stream(heytingAlgebra.elementNames).toList();
+        List<String> elementLists = Arrays.stream(elementNames).toList();
 
         //loop through all elements
         //take 'index' of each; assume as bot or top
@@ -201,7 +174,7 @@ public class HeytingAlgebra implements XMLObject, XMLNodeConverter {
             //check join array using 'index' and each 'i'
             for (String s : elementLists) {
                 int i = elementLists.indexOf(s);
-                if (heytingAlgebra.join[index][i] != i) {
+                if (join[index][i] != i) {
                     isBot = false;
                     break;
                 }
@@ -210,25 +183,33 @@ public class HeytingAlgebra implements XMLObject, XMLNodeConverter {
             //check meet array using 'index' and each 'i'
             for (String s : elementLists) {
                 int i = elementLists.indexOf(s);
-                if (heytingAlgebra.meet[index][i] != i) {
+                if (meet[index][i] != i) {
                     isTop = false;
                     break;
                 }
             }
             if (isBot) {
-                heytingAlgebra.bot = index;
+                bot = index;
             }
             if (isTop) {
-                heytingAlgebra.top = index;
+                top = index;
             }
         }
     }
-    public void impl(){
-    //impl[x,y] is the join of all elements z with leq(meet[z][x],y)
-    //TODO
-        //Need some clarification on implementing this
+    public void computeImpl(){
+        impl = new int[numElements][numElements];
+
+        for (int x = 0; x < numElements; x++) {
+            for (int y = 0; y < numElements; y++) {
+                int result = bot;
+                for (int z = 0; z < numElements; z++) {
+                    if (leq(meet[z][x], y)){
+                        result = join[result][z];
+                    }
+                }
+                impl[x][y] = result;
+            }
+        }
     }
 }
 
-//bot is the element so that join[bot,x] == x for all x.
-//top is the element so that meet[top,x] == x for all x.

@@ -5,10 +5,10 @@ import java.io.IOException;
 public class Main {
     public static void main(String[] args) {
         SetObject setObject = SetObject.load("src/data/set_object.xml");
-        System.out.println("SetObject-> "+setObject.toXMLString());
+        System.out.println("SetObject-> "+setObject.toString());
 
         HeytingAlgebra heytingAlgebra = HeytingAlgebra.load("src/data/heyting.xml");
-        System.out.println("Heyting-> "+heytingAlgebra.toXMLString());
+        System.out.println("Heyting-> "+heytingAlgebra.toString());
 
         try{
             setObject.save("src/data/set_object_out.xml");
