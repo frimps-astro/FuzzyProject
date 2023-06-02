@@ -1,9 +1,12 @@
-import org.w3c.dom.Node;
+package main;
 
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamWriter;
+import org.w3c.dom.Node;
+import xmlutils.XMLNodeConverter;
+import xmlutils.XMLObject;
+import xmlutils.XMLReader;
+
+
 import java.io.*;
-import java.text.MessageFormat;
 import java.util.Arrays;
 
 public class SetObject implements XMLObject {

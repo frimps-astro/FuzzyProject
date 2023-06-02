@@ -1,3 +1,5 @@
+package main;
+
 public class Relation {
     private SetObject source;
     private SetObject target;

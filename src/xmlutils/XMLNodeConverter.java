@@ -1,4 +1,8 @@
+package xmlutils;
+
 import exceptions.EmptyNodesException;
+import main.HeytingAlgebra;
+import main.SetObject;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -7,27 +11,25 @@ import java.util.*;
 public class XMLNodeConverter<E> {
 
 	public E convertXMLNode(Node node) {
-		System.out.println("Node name: "+node.getNodeName());
-		switch (node.getNodeName()){
-			case "SetObject":{
 
-                    int numElements = XMLTools.getIntAttribute(node, "size");
-					String[] elementNames = node.getTextContent().trim().split(",");
+        //Is node SetObject
+        if (node.getNodeName().equals("SetObject")) {
+            int numElements = XMLTools.getIntAttribute(node, "size");
+            String[] elementNames = node.getTextContent().trim().split(",");
 
-					return (E) new SetObject(numElements, elementNames);
-			}
-			default:{
-				Map<String, Object> heytingAlgebra = elementsMeetJoin(node);
+            return (E) new SetObject(numElements, elementNames);
+        }
 
-                int numElements = (int) heytingAlgebra.get("numElements");
-				String[] elementNames = (String[]) heytingAlgebra.get("elementNames");
-				int[][] meet = (int[][]) heytingAlgebra.get("meet");
-				int[][] join = (int[][]) heytingAlgebra.get("join");
+        //If not work on HeytingAlgebra
+        Map<String, Object> heytingAlgebra = elementsMeetJoin(node);
 
-				return (E) new HeytingAlgebra(numElements, elementNames, meet, join);
-			}
-		}
-	}
+        int numElements = (int) heytingAlgebra.get("numElements");
+        String[] elementNames = (String[]) heytingAlgebra.get("elementNames");
+        int[][] meet = (int[][]) heytingAlgebra.get("meet");
+        int[][] join = (int[][]) heytingAlgebra.get("join");
+
+        return (E) new HeytingAlgebra(numElements, elementNames, meet, join);
+    }
 
 	private Map<String, Object> elementsMeetJoin(Node node){
         String[] meet_ = null;

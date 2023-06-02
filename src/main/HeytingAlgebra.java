@@ -1,15 +1,12 @@
-import exceptions.InvalidXYvalueException;
-import exceptions.EmptyNodesException;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+package main;
 
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamWriter;
+import exceptions.InvalidXYvalueException;
+import xmlutils.*;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.List;
 

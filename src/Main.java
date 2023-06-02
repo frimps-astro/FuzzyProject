@@ -1,3 +1,6 @@
+import main.HeytingAlgebra;
+import main.SetObject;
+
 import java.io.IOException;
 
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
