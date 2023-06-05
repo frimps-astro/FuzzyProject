@@ -1,12 +1,7 @@
 package xmlutils;
 
-import exceptions.EmptyNodesException;
-import main.HeytingAlgebra;
 import main.SetObject;
 import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
-import java.util.*;
 
 public class SetObjectXMLNodeConverter implements XMLNodeConverter{
 
