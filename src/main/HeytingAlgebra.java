@@ -62,7 +62,7 @@ public class HeytingAlgebra implements XMLObject {
         //load from xml file
         XMLReader<HeytingAlgebra> reader = new XMLReader<>();
         reader.setXMLSchema(System.getProperty("user.dir") + "/src/data/heyting.xsd");
-        reader.setXMLNodeConverter(new XMLNodeConverter<>());
+        reader.setXMLNodeConverter(new HeytingAlgebraXMLNodeConverter());
 
         return reader.readXML(new File(filename));
     }

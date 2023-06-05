@@ -4,6 +4,14 @@ public class Basis {
     private HeytingAlgebra heytingAlgebra;
     private int[][] star;
 
+    public HeytingAlgebra getHeytingAlgebra() {
+        return heytingAlgebra;
+    }
+
+    public int[][] getStar() {
+        return star;
+    }
+
     public int getNumElements(){
         return heytingAlgebra.getNumElements();
     }

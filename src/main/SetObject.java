@@ -1,7 +1,6 @@
 package main;
 
-import org.w3c.dom.Node;
-import xmlutils.XMLNodeConverter;
+import xmlutils.SetObjectXMLNodeConverter;
 import xmlutils.XMLObject;
 import xmlutils.XMLReader;
 
@@ -22,7 +21,7 @@ public class SetObject implements XMLObject {
         //load from xml file
         XMLReader<SetObject> reader = new XMLReader<>();
         reader.setXMLSchema(System.getProperty("user.dir") + "/src/data/set_object.xsd");
-        reader.setXMLNodeConverter(new XMLNodeConverter<>());
+        reader.setXMLNodeConverter(new SetObjectXMLNodeConverter());
 
         return reader.readXML(new File(filename));
     }

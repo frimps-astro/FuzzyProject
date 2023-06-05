@@ -114,5 +114,5 @@ public class XMLReader<E> {
             System.out.println("No XMLNodeConverter set.");
             System.exit(1);
    	}
-    } 	
-}    
+    }
+}
