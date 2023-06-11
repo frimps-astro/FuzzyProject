@@ -1,5 +1,7 @@
 package main;
 
+import exceptions.RelationException;
+
 import java.util.function.BiFunction;
 
 public class Relation {
@@ -50,12 +52,18 @@ public class Relation {
         int[][] star = basis.getStar();
 
         //run n against all values in star
-        for (int i = 0; i < source.getNumElements(); i++) {
-            for (int j = 0; j < target.getNumElements(); j++) {
-                if (star[i][j] != n){
-                    return null; //what value to return if n not valid in basis??
+        try {
+            if (n <= 0 || n > basis.getNumElements())
+                throw new RelationException("The value of n not valid in basis");
+
+            for (int i = 0; i < source.getNumElements(); i++) {
+                for (int j = 0; j < target.getNumElements(); j++) {
+                    if (star[i][j] != n)
+                        throw new RelationException("basis does not contain only n values");
                 }
             }
+        } catch (RelationException e) {
+            throw new RuntimeException(e);
         }
         return new Relation(source, target, basis, n);
     }
@@ -79,17 +87,19 @@ public class Relation {
         Relation relation = ideal(setObject, setObject, basis, n);
         int[][] star = basis.getStar();
         int numElements = setObject.getNumElements();
-        if (relation != null){
-            for (int i = 0; i < numElements; i++) {
-                for (int j = 0; j < numElements; j++) {
-                    //check diagonals else check for bot/top
+        for (int i = 0; i < numElements; i++) {
+            for (int j = 0; j < numElements; j++) {
+                //check diagonals else check for bot/top
+                try {
                     if (i == j && star[i][j] != n) {
-                        return null; //Null-> what value to return when not diagonal??
-                    }else{
-                        if (star[i][j] != pos){
-                            return null; //Null -> and value to return when other non-diagonals are not bot
+                        throw new RelationException("Basis matrix isn't a valid diagonal matrix");
+                    } else {
+                        if (star[i][j] != pos) {
+                            throw new RelationException("A non diagonal value isn't bot");
                         }
                     }
+                } catch (RelationException ex){
+                    throw new RuntimeException(ex);
                 }
             }
         }
@@ -111,11 +121,15 @@ public class Relation {
     private static Integer applyBinary(Relation r, BiFunction<Integer, Integer, Integer> operation) {
         int s = r.source.getNumElements();
         int t = r.target.getNumElements();
-        if (s == t){
-            return operation.apply(s, t);
-        }
 
-        return null;
+        try {
+            if (s != t)
+                throw new RelationException("Basis of source and target are not the same");
+            else
+                return operation.apply(s, t);
+        } catch (RelationException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     public Relation composition(Relation r) {

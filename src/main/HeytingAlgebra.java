@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.List;
 
@@ -79,17 +80,12 @@ public class HeytingAlgebra implements XMLObject {
         }
     }
 
-    private boolean leq(int x, int y){
+    private boolean leq(int x, int y) throws InvalidXYvalueException{
         //check whether the two elements satisfy meet[x][y] =x
-       try {
-           if ((x < -1 || x > numElements) || (y < -1 || y > numElements))
-               throw new InvalidXYvalueException("Invalid x or y values");
-
-           return meet[x][y] == x;
-       }catch (Exception ex){
-           System.out.println("leq method exception message: " + ex.getMessage());
-       }
-       return false;
+           if ((x < 0 || x >= numElements) || (y < 0 || y >= numElements))
+               throw new InvalidXYvalueException("Invalid x:"+x+" or y:"+y+" values");
+           else
+            return meet[x][y] == x;
     }
 
     @Override
@@ -200,8 +196,12 @@ public class HeytingAlgebra implements XMLObject {
             for (int y = 0; y < numElements; y++) {
                 int result = bot;
                 for (int z = 0; z < numElements; z++) {
-                    if (leq(meet[z][x], y)){
-                        result = join[result][z];
+                    try {
+                        if (leq(meet[z][x], y)){
+                            result = join[result][z];
+                        }
+                    } catch (InvalidXYvalueException e) {
+                        throw new RuntimeException(e);
                     }
                 }
                 impl[x][y] = result;

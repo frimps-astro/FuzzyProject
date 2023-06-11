@@ -1,6 +1,7 @@
 package xmlutils;
 
 import exceptions.EmptyNodesException;
+import exceptions.InvalidMeetJoinMatrixLengthException;
 import main.HeytingAlgebra;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -46,7 +47,7 @@ public class HeytingAlgebraXMLNodeConverter implements XMLNodeConverter{
             }
         }
 
-		//Map to store elementNames, meet and join
+		//Map to store numElements, elementNames, meet and join
 		Map<String, Object> heytingAlgebraMap = new HashMap<>();
 
         heytingAlgebraMap.put("numElements", numElements);
@@ -59,8 +60,12 @@ public class HeytingAlgebraXMLNodeConverter implements XMLNodeConverter{
 
         try{
             if (meet_ == null || meet_[0].isBlank() || join_ == null || join_[0].isBlank()
-                    || elements == null || elements[0].isBlank())
-                throw new EmptyNodesException("XML cannot have Elements, Meet or Join empty nodes");
+                    || elements == null || elements[0].isEmpty())
+                throw new EmptyNodesException("HeytingAlgebra XML cannot have Elements, Meet or Join empty nodes");
+
+            if (meet_.length != numElements || join_.length != numElements)
+                throw new InvalidMeetJoinMatrixLengthException(
+                        "Meet or Join matrix length must be equal to the number of elements");
 
             //convert elements to a string list for easy index computations
             List<String> elementLists = Arrays.stream(elements).toList();
@@ -76,10 +81,10 @@ public class HeytingAlgebraXMLNodeConverter implements XMLNodeConverter{
 
 			heytingAlgebraMap.put("meet", meet);
 			heytingAlgebraMap.put("join", join);
-        } catch (Exception ex){
-            System.out.println(ex.getMessage());
+        } catch (EmptyNodesException | InvalidMeetJoinMatrixLengthException ex){
+            throw new RuntimeException(ex);
         }
 
-		return heytingAlgebraMap;
+        return heytingAlgebraMap;
     }
 }
