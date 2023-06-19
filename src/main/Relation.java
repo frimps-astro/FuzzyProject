@@ -1,23 +1,33 @@
 package main;
 
-import exceptions.RelationException;
+import exceptions.OperationExecutionException;
 
+import javax.security.sasl.RealmCallback;
+import java.util.Arrays;
 import java.util.function.BiFunction;
 
 public class Relation {
     private final SetObject source;
     private final SetObject target;
     private final Basis truth;
-    private int[][] matrix;
+    private final int[][] matrix;
 
+    public int[][] getMatrix() {
+        return matrix;
+    }
 
-    public Relation(SetObject source, SetObject target, Basis truth, int n) {
-        this.source = source;
-        this.target = target;
-        this.truth = truth;
-
-        new Relation(this.source, this.target, this.truth,
-                fillMatrix(this.source.getNumElements(), this.target.getNumElements(), n));
+    @Override
+    public String toString() {
+        StringBuilder matrixStr = new StringBuilder();
+        for (int i = 0; i < source.getNumElements(); i++) {
+            for (int j = 0; j < target.getNumElements(); j++) {
+                matrixStr.append(matrix[i][j]).append(" ");
+            }
+            matrixStr.append("\n");
+        }
+        return "Relation{" +
+                "matrix=\n" + matrixStr +
+                '}';
     }
 
     public Relation(SetObject source, SetObject target, Basis truth, int[][] matrix) {
@@ -27,155 +37,189 @@ public class Relation {
         this.matrix = matrix;
     }
 
-    private int[][] fillMatrix(int sourceNum, int targetNum, int n) {
-        int[][] matrix_ = new int[sourceNum][targetNum];
-
-        for (int i = 0; i < sourceNum; i++) {
-            for (int j = 0; j < targetNum; j++) {
-                matrix_[i][j] = n;
-            }
-        }
-        return matrix_;
-    }
-
     public Relation converse() {
-        int[][] transMatrix = new int[source.getNumElements()][target.getNumElements()];
+        int[][] transMatrix = new int[target.getNumElements()][source.getNumElements()];
         for (int i = 0; i < source.getNumElements(); i++) {
             for (int j = 0; j < target.getNumElements(); j++) {
                 transMatrix[j][i] = this.matrix[i][j];
             }
         }
-        return new Relation(source, target, truth, transMatrix);
+        return new Relation(target, source, truth, transMatrix);
+    }
+    public Relation complement() {
+        int[][] compMatrix = new int[source.getNumElements()][target.getNumElements()];
+        int bot = truth.getBot();
+        for (int i = 0; i < source.getNumElements(); i++) {
+            for (int j = 0; j < target.getNumElements(); j++) {
+                compMatrix[i][j] = truth.getImpl(this.matrix[i][j],bot);
+            }
+        }
+        return new Relation(source, target, truth, compMatrix);
     }
 
     public static Relation ideal(SetObject source, SetObject target, Basis basis, int n) {
-        int[][] star = basis.getStar();
-
-        //run n against all values in star
-        try {
-            if (n <= 0 || n > basis.getNumElements())
-                throw new RelationException("The value of n not valid in basis");
-
+        if (0 <= n && n < basis.getNumElements()) {
+            int[][] matrix = new int[source.getNumElements()][target.getNumElements()];
             for (int i = 0; i < source.getNumElements(); i++) {
                 for (int j = 0; j < target.getNumElements(); j++) {
-                    if (star[i][j] != n)
-                        throw new RelationException("basis does not contain only n values");
+                    matrix[i][j] = n;
                 }
             }
-        } catch (RelationException e) {
-            throw new RuntimeException(e);
+            return new Relation(source, target, basis, matrix);
+        } else {
+            throw new OperationExecutionException("The value of n isn't valid in basis");
         }
-        return new Relation(source, target, basis, n);
     }
     public static Relation bot(SetObject source, SetObject target, Basis basis) {
-        return ideal(source, target, basis, basis.getBot());
+        Relation result = null;
+        try {
+            result = ideal(source, target, basis, basis.getBot()); // this exception should never happen!
+        } catch (OperationExecutionException ex) {}
+        return result;
     }
 
     public static Relation top(SetObject source, SetObject target, Basis basis) {
-        return ideal(source, target, basis, basis.getTop());
+        Relation result = null;
+        try {
+            result = ideal(source, target, basis, basis.getTop()); // this exception should never happen!
+        } catch (OperationExecutionException ex) {}
+        return result;
     }
 
     public static Relation scalar(SetObject setObject, Basis basis, int n) {
-        return diagonalMatrix(setObject, basis, n, basis.getBot());
+        if (0 <= n && n < basis.getNumElements()) {
+            int numElements = setObject.getNumElements();
+            int bot = basis.getBot();
+            int[][] matrix = new int[numElements][numElements];
+            for (int i = 0; i < numElements; i++) {
+                for (int j = 0; j < numElements; j++) {
+                    matrix[i][j] = i==j? n : bot;
+                }
+            }
+            return new Relation(setObject, setObject, basis, matrix);
+        } else {
+            throw new OperationExecutionException("The valid of n isn't valid in basis");
+        }
     }
 
     public static Relation identity(SetObject setObject, Basis basis, int n) {
-        return diagonalMatrix(setObject, basis, n, basis.getTop());
+        Relation result = null;
+        try {
+            result = scalar(setObject, basis, basis.getTop()); // this exception should never happen!
+        } catch (OperationExecutionException ex) {}
+        return result;
     }
 
-    private static Relation diagonalMatrix(SetObject setObject, Basis basis, int n, int pos) {
-        Relation relation = ideal(setObject, setObject, basis, n);
-        int[][] star = basis.getStar();
-        int numElements = setObject.getNumElements();
-        for (int i = 0; i < numElements; i++) {
-            for (int j = 0; j < numElements; j++) {
-                //check diagonals else check for bot/top
-                try {
-                    if (i == j && star[i][j] != n) {
-                        throw new RelationException("Basis matrix isn't a valid diagonal matrix");
-                    } else {
-                        if (star[i][j] != pos) {
-                            throw new RelationException("A non diagonal value isn't bot");
-                        }
-                    }
-                } catch (RelationException ex){
-                    throw new RuntimeException(ex);
-                }
-            }
-        }
-        return relation;
-    }
 
-    public Integer meet(Relation r){
+    public Relation meet(Relation r){
         return applyBinary(r, truth::getMeet);
     }
 
-    public Integer join(Relation r){
+    public Relation join(Relation r){
         return applyBinary(r, truth::getJoin);
     }
 
-    public Integer impl(Relation r){
+    public Relation impl(Relation r){
         return applyBinary(r, truth::getImpl);
     }
 
-    private static Integer applyBinary(Relation r, BiFunction<Integer, Integer, Integer> operation) {
-        int s = r.source.getNumElements();
-        int t = r.target.getNumElements();
+    public Relation leftResidual(Relation r) {
+        return multiply(r, false, false, truth::getImpl, truth::getMeet);
+    }
 
-        try {
-            if (s != t)
-                throw new RelationException("Basis of source and target are not the same");
-            else
-                return operation.apply(s, t);
-        } catch (RelationException ex) {
-            throw new RuntimeException(ex);
+    public Relation rightResidual(Relation r) {
+        return r.multiply(this, true, true, truth::getImpl, truth::getMeet);
+    }
+
+    public Relation syq(Relation r) {
+        BiFunction<Integer, Integer, Integer> equiv = (i, j) -> truth.getMeet(truth.getImpl(i, j),truth.getImpl(j, i));
+        return multiply(r, false, false, equiv, truth::getMeet);
+    }
+
+    private Relation applyBinary(Relation r, BiFunction<Integer, Integer, Integer> operation) {
+        if (this.source == r.source && this.target == r.target) {
+            int sourceEl = this.source.getNumElements();
+            int targetEl = this.target.getNumElements();
+            int[][] matrix_ = new int[sourceEl][targetEl];
+            for (int i=0; i< sourceEl; i++) {
+                for (int j=0; j < targetEl; j++) {
+                    matrix_[i][j] = operation.apply(this.matrix[i][j], r.matrix[i][j]);
+                }
+            }
+            return new Relation(this.source, this.target, this.truth, matrix_ );
+        } else {
+            throw new OperationExecutionException("Relations target and source objects are must be the same");
         }
     }
 
     public Relation composition(Relation r) {
-        return multiply(r, false, true, truth::getMeet, truth::getJoin);
+        return multiply(r, true, false, truth::getMeet, truth::getJoin);
     }
 
-    private Relation multiply(Relation r, boolean row1, boolean row2, BiFunction<Integer, Integer, Integer>
-            operation, BiFunction<Integer, Integer, Integer> aggregate) {
-        int firstMatrix;
-        int secondMatrix;
-        int[][] resultMatrix;
+    private Relation multiply(Relation r, boolean row1, boolean row2, BiFunction<Integer, Integer, Integer> operation, BiFunction<Integer, Integer, Integer> aggregate) {
+        Basis resultBasis;
+        BiFunction<Integer, Integer, Integer> accessThis;
+        BiFunction<Integer, Integer, Integer> accessR;
+        SetObject resultSource;
+        SetObject resultTarget;
+        SetObject rangeObject;
 
-        //check if basis are the same
-        if (this.truth.getNumElements() == r.truth.getNumElements()){
-            if (row1 && row2){
-                firstMatrix = this.target.getNumElements();
-                secondMatrix = r.target.getNumElements(); // OR = firstMatrix ??
-            } else if (row1) {
-                firstMatrix = this.target.getNumElements();
-                secondMatrix = r.source.getNumElements(); // OR = firstMatrix ??
-            } else if (row2) {
-                firstMatrix = this.source.getNumElements();
-                secondMatrix = r.target.getNumElements();
-            } else {
-                firstMatrix = this.source.getNumElements();
-                secondMatrix = r.source.getNumElements();
-            }
-            resultMatrix = new int[firstMatrix][secondMatrix];
-            int len = resultMatrix.length;
-
-            for (int i = 0; i < firstMatrix; i++) {
-                for (int j = 0; j < secondMatrix; j++) {
-                    int result = 0;
-
-                    //in HeytingAlgebra::computeImpl, len here was the number of elements
-                    //i am not sure of this one
-                    for (int k = 0; k < len; k++) {
-                        result = aggregate.apply(result, operation.apply(this.matrix[i][k], r.matrix[k][j]));
+        if (this.truth == r.truth) {
+            resultBasis = truth;
+            if (row1) {
+                resultSource = this.source;
+                rangeObject = this.target;
+                accessThis = (i,j) -> this.matrix[i][j];
+                if (row2) {
+                    if (this.target==r.target) {
+                        accessR = (i,j) -> r.matrix[i][j];
+                        resultTarget = r.source;
+                    } else {
+                        throw new OperationExecutionException("Relations Target objects must be the same");
                     }
-                    resultMatrix[i][j] = result;
+                } else {
+                    if (this.target==r.source) {
+                        accessR = (i,j) -> r.matrix[j][i];
+                        resultTarget = r.target;
+                    } else {
+                        throw new OperationExecutionException("Relations Target and Source objects must be the same");
+                    }
+                }
+            } else {
+                resultSource = this.target;
+                rangeObject = this.source;
+                accessThis = (i,j) -> this.matrix[j][i];
+                if (row2) {
+                    if (this.source==r.target) {
+                        accessR = (i,j) -> r.matrix[i][j];
+                        resultTarget = r.source;
+                    } else {
+                        throw new OperationExecutionException("Relations Source and Target objects must be the same");
+                    }
+                } else {
+                    if (this.source==r.source) {
+                        accessR = (i,j) -> r.matrix[j][i];
+                        resultTarget = r.target;
+                    } else {
+                        throw new OperationExecutionException("Relations source objects must be the same");
+                    }
                 }
             }
-
-            return new Relation(source, target, truth, resultMatrix);
+        } else {
+            throw new OperationExecutionException("Relation basis must be the same");
         }
 
-        return null; //value to return if basis not true
+        int[][] resultMatrix = new int[resultSource.getNumElements()][resultTarget.getNumElements()];
+        for (int i = 0; i < resultSource.getNumElements(); i++) {
+            for (int j = 0; j < resultTarget.getNumElements(); j++) {
+                int element = operation.apply(accessThis.apply(i,0),accessR.apply(j,0));
+                for (int k = 1; k < rangeObject.getNumElements(); k++) {
+                    element = aggregate.apply(element, operation.apply(accessThis.apply(i,k),accessR.apply(j,k)));
+                }
+                resultMatrix[i][j] = element;
+            }
+        }
+
+        return new Relation(resultSource,resultTarget,resultBasis,resultMatrix);
     }
 }

@@ -7,11 +7,13 @@
     <list default="true" id="d246993b-c2a2-4f1d-b93f-e949f1ff56e0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/FuzzyProject.iml" beforeDir="false" afterPath="$PROJECT_DIR$/FuzzyProject.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/data/heyting.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/heyting.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/HeytingAlgebra.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/HeytingAlgebra.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/FuzzyProject/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/main/Basis.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/FuzzyProject/main/Basis.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/main/Relation.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/FuzzyProject/main/Relation.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/xmlutils/HeytingAlgebraXMLNodeConverter.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/FuzzyProject/xmlutils/HeytingAlgebraXMLNodeConverter.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Basis.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Basis.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/Relation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Relation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/xmlutils/HeytingAlgebraXMLNodeConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/xmlutils/HeytingAlgebraXMLNodeConverter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/xmlutils/SetObjectXMLNodeConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/xmlutils/SetObjectXMLNodeConverter.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,22 +48,33 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;openjdk-20&quot;,
-    &quot;onboarding.tips.debug.path&quot;: &quot;/Users/frimps/Documents/BROCK/SPRING/FuzzyProject/FuzzyProjectNew/src/Main.java&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15234375&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Downloaded.Files.Path.Enabled": "false",
+    "Repository.Attach.Annotations": "false",
+    "Repository.Attach.JavaDocs": "false",
+    "Repository.Attach.Sources": "false",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "jdk.selected.JAVA_MODULE": "openjdk-20",
+    "last_opened_file_path": "/Users/frimps/Documents/BROCK/SPRING/FuzzyProject/src/test/data/syq",
+    "onboarding.tips.debug.path": "/Users/frimps/Documents/BROCK/SPRING/FuzzyProject/FuzzyProjectNew/src/Main.java",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15234375",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "Errors"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CreateClassDialog.RecentsKey">
       <recent name="" />
     </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/test/data/syq" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/test/data/bounds" />
+      <recent name="$PROJECT_DIR$/src/test/data/composition" />
       <recent name="$PROJECT_DIR$/src/data" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
@@ -71,7 +84,7 @@
       <recent name="xmlutils" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="FuzzyProject" />
@@ -79,9 +92,76 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="TestBoundsRelation" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="FuzzyProject" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="test" />
+      <option name="MAIN_CLASS_NAME" value="test.TestBoundsRelation" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestBoundsRelation.testLowerBound" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="FuzzyProject" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="test" />
+      <option name="MAIN_CLASS_NAME" value="test.TestBoundsRelation" />
+      <option name="METHOD_NAME" value="testLowerBound" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestBoundsRelation.testUpperBound" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="FuzzyProject" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="test" />
+      <option name="MAIN_CLASS_NAME" value="test.TestBoundsRelation" />
+      <option name="METHOD_NAME" value="testUpperBound" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TestSymmetricQuotient.testASyqB" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="FuzzyProject" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="test" />
+      <option name="MAIN_CLASS_NAME" value="test.TestSymmetricQuotient" />
+      <option name="METHOD_NAME" value="testASyqB" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
+        <item itemvalue="JUnit.TestSymmetricQuotient.testASyqB" />
+        <item itemvalue="JUnit.TestBoundsRelation" />
+        <item itemvalue="JUnit.TestBoundsRelation.testLowerBound" />
+        <item itemvalue="JUnit.TestBoundsRelation.testUpperBound" />
       </list>
     </recent_temporary>
   </component>
@@ -95,5 +175,17 @@
       <updated>1683741048565</updated>
     </task>
     <servers />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/FuzzyProject$TestBoundsRelation_testUpperBound.ic" NAME="TestBoundsRelation.testUpperBound Coverage Results" MODIFIED="1687047922971" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>test.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/FuzzyProject$test_in_FuzzyProject.ic" NAME="test in FuzzyProject Coverage Results" MODIFIED="1687047954528" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>test.*</FILTER>
+    </SUITE>
   </component>
 </project>

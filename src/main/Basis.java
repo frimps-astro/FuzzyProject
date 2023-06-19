@@ -1,8 +1,13 @@
 package main;
 
 public class Basis {
-    private HeytingAlgebra heytingAlgebra;
-    private int[][] star;
+    private final HeytingAlgebra heytingAlgebra;
+    private final int[][] star;
+
+    public Basis(HeytingAlgebra heytingAlgebra, int[][] star) {
+        this.heytingAlgebra = heytingAlgebra;
+        this.star = star;
+    }
 
     public HeytingAlgebra getHeytingAlgebra() {
         return heytingAlgebra;
