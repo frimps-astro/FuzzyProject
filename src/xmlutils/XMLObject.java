@@ -1,5 +1,5 @@
 package xmlutils;
 
 public interface XMLObject {
-	public String toXMLString();	
+	public String toXMLString();
 }

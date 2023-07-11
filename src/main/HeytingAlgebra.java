@@ -11,11 +11,11 @@ import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.List;
 
-public class HeytingAlgebra implements XMLObject {
-    private final  int numElements;
-    private  final String[] elementNames;
-    private  final int[][] meet;
-    private  final int[][] join;
+public class HeytingAlgebra extends SetObject<HeytingAlgebra> {
+    private  int numElements;
+    private String[] elementNames;
+    private int[][] meet;
+    private int[][] join;
     private  int[][] impl;
     private  int bot;
     private  int top;
@@ -59,14 +59,7 @@ public class HeytingAlgebra implements XMLObject {
         computeBotTop();
     }
 
-    public static HeytingAlgebra load(String filename) {
-        //load from xml file
-        XMLReader<HeytingAlgebra> reader = new XMLReader<>();
-        reader.setXMLSchema(System.getProperty("user.dir") + "/src/data/heyting.xsd");
-        reader.setXMLNodeConverter(new HeytingAlgebraXMLNodeConverter());
-
-        return reader.readXML(new File(filename));
-    }
+    public HeytingAlgebra(){}
 
     public void save(String filename) throws IOException {
         //save as xml

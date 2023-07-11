@@ -1,5 +1,5 @@
-<SetObject size="6">
+<PrimitiveSetObject size="6">
     <Elements>
         a,b,c,d,e,f
     </Elements>
-</SetObject>
+</PrimitiveSetObject>

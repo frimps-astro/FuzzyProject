@@ -1,19 +1,31 @@
 package main;
 
+import classutils.Tuple;
 import exceptions.OperationExecutionException;
 
-import javax.security.sasl.RealmCallback;
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.function.BiFunction;
 
 public class Relation {
-    private final SetObject source;
-    private final SetObject target;
+    private  PrimitiveSetObject source;
+    private  PrimitiveSetObject target;
+
+    private SetObject<ProductObject> left;
+    private SetObject<ProductObject> right;
+
     private final Basis truth;
     private final int[][] matrix;
 
     public int[][] getMatrix() {
         return matrix;
+    }
+
+    public int getLeftNum() {
+        return left.getNumElements();
+    }
+
+    public int getRightNum() {
+        return right.getNumElements();
     }
 
     @Override
@@ -30,9 +42,40 @@ public class Relation {
                 '}';
     }
 
-    public Relation(SetObject source, SetObject target, Basis truth, int[][] matrix) {
+    public String piToString() {
+        StringBuilder matrixStr = new StringBuilder();
+        for (int i = 0; i < right.getNumElements()* left.getNumElements(); i++) {
+            for (int j = 0; j < left.getNumElements(); j++) {
+                matrixStr.append(matrix[i][j]).append(" ");
+            }
+            matrixStr.append("\n");
+        }
+        return "Relation{" +
+                "matrix=\n" + matrixStr +
+                '}';
+    }
+    public String rhoToString() {
+        StringBuilder matrixStr = new StringBuilder();
+        for (int i = 0; i < right.getNumElements()* left.getNumElements(); i++) {
+            for (int j = 0; j < right.getNumElements(); j++) {
+                matrixStr.append(matrix[i][j]).append(" ");
+            }
+            matrixStr.append("\n");
+        }
+        return "Relation{" +
+                "matrix=\n" + matrixStr +
+                '}';
+    }
+
+    public Relation(PrimitiveSetObject source, PrimitiveSetObject target, Basis truth, int[][] matrix) {
         this.source = source;
         this.target = target;
+        this.truth = truth;
+        this.matrix = matrix;
+    }
+    public Relation(SetObject<ProductObject> left, SetObject<ProductObject> right, Basis truth, int[][] matrix) {
+        this.left = left;
+        this.right = right;
         this.truth = truth;
         this.matrix = matrix;
     }
@@ -57,7 +100,7 @@ public class Relation {
         return new Relation(source, target, truth, compMatrix);
     }
 
-    public static Relation ideal(SetObject source, SetObject target, Basis basis, int n) {
+    public static Relation ideal(PrimitiveSetObject source, PrimitiveSetObject target, Basis basis, int n) {
         if (0 <= n && n < basis.getNumElements()) {
             int[][] matrix = new int[source.getNumElements()][target.getNumElements()];
             for (int i = 0; i < source.getNumElements(); i++) {
@@ -70,7 +113,7 @@ public class Relation {
             throw new OperationExecutionException("The value of n isn't valid in basis");
         }
     }
-    public static Relation bot(SetObject source, SetObject target, Basis basis) {
+    public static Relation bot(PrimitiveSetObject source, PrimitiveSetObject target, Basis basis) {
         Relation result = null;
         try {
             result = ideal(source, target, basis, basis.getBot()); // this exception should never happen!
@@ -78,7 +121,7 @@ public class Relation {
         return result;
     }
 
-    public static Relation top(SetObject source, SetObject target, Basis basis) {
+    public static Relation top(PrimitiveSetObject source, PrimitiveSetObject target, Basis basis) {
         Relation result = null;
         try {
             result = ideal(source, target, basis, basis.getTop()); // this exception should never happen!
@@ -86,7 +129,7 @@ public class Relation {
         return result;
     }
 
-    public static Relation scalar(SetObject setObject, Basis basis, int n) {
+    public static Relation scalar(PrimitiveSetObject setObject, Basis basis, int n) {
         if (0 <= n && n < basis.getNumElements()) {
             int numElements = setObject.getNumElements();
             int bot = basis.getBot();
@@ -102,7 +145,65 @@ public class Relation {
         }
     }
 
-    public static Relation identity(SetObject setObject, Basis basis, int n) {
+    public static Relation pi(ProductObject productObject, Basis basis, int n){
+        if (0 <= n && n < basis.getNumElements()) {
+            SetObject<ProductObject> left = productObject.getLeft();
+            SetObject<ProductObject> right = productObject.getRight();
+            String[] leftElements = left.getElementNames();
+
+            int bot = basis.getBot();
+            int top = basis.getTop();
+            ArrayList<Tuple> productElements =productPairSets(productObject);
+
+            int[][] matrix = new int[left.getNumElements()*right.getNumElements()][left.getNumElements()];
+            for (int i = 0; i < productElements.size(); i++) {
+                for (int j = 0; j < left.getNumElements(); j++) {
+                    matrix[i][j] = productElements.get(i).getLeft().equals(leftElements[j]) ? top : bot;
+                }
+            }
+            return new Relation(productObject.getLeft(), productObject.getRight(), basis, matrix);
+        } else {
+            throw new OperationExecutionException("The valid of n isn't valid in basis");
+        }
+    }
+
+    public static Relation rho(ProductObject productObject, Basis basis, int n){
+        if (0 <= n && n < basis.getNumElements()) {
+            SetObject<ProductObject> left = productObject.getLeft();
+            SetObject<ProductObject> right = productObject.getRight();
+            String[] rightElements = right.getElementNames();
+
+            int bot = basis.getBot();
+            int top = basis.getTop();
+            ArrayList<Tuple> productElements =productPairSets(productObject);
+
+            int[][] matrix = new int[left.getNumElements()*right.getNumElements()][right.getNumElements()];
+            for (int i = 0; i < productElements.size(); i++) {
+                for (int j = 0; j < right.getNumElements(); j++) {
+                    matrix[i][j] = productElements.get(i).getRight().equals(rightElements[j]) ? top : bot;
+                }
+            }
+            return new Relation(productObject.getLeft(), productObject.getRight(), basis, matrix);
+        } else {
+            throw new OperationExecutionException("The valid of n isn't valid in basis");
+        }
+    }
+
+    public static ArrayList<Tuple> productPairSets(ProductObject productObject){
+        SetObject<ProductObject> left = productObject.getLeft();
+        SetObject<ProductObject> right = productObject.getRight();
+        ArrayList<Tuple> pairObjects = new ArrayList<>();
+
+        for (int i = 0; i < left.getNumElements(); i++) {
+            for (int j = 0; j < right.getNumElements(); j++) {
+                pairObjects.add(new Tuple(left.getElementNames()[i], right.getElementNames()[j]));
+            }
+        }
+
+        return pairObjects;
+    }
+
+    public static Relation identity(PrimitiveSetObject setObject, Basis basis, int n) {
         Relation result = null;
         try {
             result = scalar(setObject, basis, basis.getTop()); // this exception should never happen!
@@ -160,9 +261,9 @@ public class Relation {
         Basis resultBasis;
         BiFunction<Integer, Integer, Integer> accessThis;
         BiFunction<Integer, Integer, Integer> accessR;
-        SetObject resultSource;
-        SetObject resultTarget;
-        SetObject rangeObject;
+        PrimitiveSetObject resultSource;
+        PrimitiveSetObject resultTarget;
+        PrimitiveSetObject rangeObject;
 
         if (this.truth == r.truth) {
             resultBasis = truth;
@@ -222,4 +323,6 @@ public class Relation {
 
         return new Relation(resultSource,resultTarget,resultBasis,resultMatrix);
     }
+
+
 }

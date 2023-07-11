@@ -1,74 +1,41 @@
 package main;
 
-import xmlutils.SetObjectXMLNodeConverter;
-import xmlutils.XMLObject;
-import xmlutils.XMLReader;
+import xmlutils.*;
 
-
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 
-public class SetObject implements XMLObject {
-    private final int numElements;
-    private final String[] elementNames;
+public abstract class SetObject<E> implements XMLObject {
+    abstract int getNumElements();
 
-    public SetObject(int numElements, String[] elementNames) {
-        this.numElements = numElements;
-        this.elementNames = elementNames;
-    }
+    abstract String[] getElementNames();
 
-    public static SetObject load(String filename) {
-        //load from xml file
-        XMLReader<SetObject> reader = new XMLReader<>();
-        reader.setXMLSchema(System.getProperty("user.dir") + "/src/data/set_object.xsd");
-        reader.setXMLNodeConverter(new SetObjectXMLNodeConverter());
+    public E load(String filename, String type) {
+        if (type.equals("heyting")) {
+            //load from xml file
+            XMLReader<E> reader = new XMLReader<>();
+            reader.setXMLSchema(System.getProperty("user.dir") + "/src/data/heyting.xsd");
+            reader.setXMLNodeConverter(new HeytingAlgebraXMLNodeConverter());
 
-        return reader.readXML(new File(filename));
-    }
+            return reader.readXML(new File(filename));
+        } else if (type.equals("primitive")){
+            //load from xml file
+            XMLReader<E> reader = new XMLReader<>();
+            reader.setXMLSchema(System.getProperty("user.dir") + "/src/data/set_object.xsd");
+            reader.setXMLNodeConverter(new PrimitiveSetObjectXMLNodeConverter());
 
-    public void save(String filename) throws IOException {
-        //save as xml
-        FileWriter writer = new FileWriter(filename);
+            return reader.readXML(new File(filename));
+        } else{
+            //load from xml file
+            XMLReader<E> reader = new XMLReader<>();
+            reader.setXMLSchema(System.getProperty("user.dir") + "/src/data/product_object.xsd");
+            reader.setXMLNodeConverter(new ProductObjectXMLNodeConverter());
 
-        try {
-            writer.write(toXMLString());
-            writer.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            return reader.readXML(new File(filename));
         }
     }
-    public int getNumElements() {
-        return numElements;
-    }
 
-    public String[] getElementNames() {
-        return elementNames;
-    }
+    abstract void save(String filename) throws IOException;
 
-    @Override
-    public String toXMLString() {
-        StringBuilder setObjectXML = new StringBuilder();
-
-        setObjectXML.append("<SetObject size=\"").append(numElements).append("\">\n");
-
-        //Elements
-        setObjectXML.append("\t<Elements>\n\t\t");
-        setObjectXML.append(Arrays.toString(elementNames)
-                //remove extra characters and white spaces
-                .replace("[","")
-                .replace("]","")
-                .replace(" ",""));
-        setObjectXML.append("\n\t</Elements>\n");
-
-        setObjectXML.append("</SetObject>"); //end root node
-
-        return setObjectXML.toString();
-
-    }
-
-    public String toString() {
-        return "Number of Elements: " + numElements + " elements: " + Arrays.toString(elementNames);
-    }
 }
-
-

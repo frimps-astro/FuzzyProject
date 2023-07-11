@@ -3,28 +3,30 @@ package test;
 import main.Basis;
 import main.HeytingAlgebra;
 import main.Relation;
-import main.SetObject;
+import main.PrimitiveSetObject;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 public class TestBoundsRelation {
     static Relation R, T;
-    static SetObject source, target;
+    static PrimitiveSetObject source, target;
     static  Basis truthR, truthT;
     static int sourceEl, targetEl;
 
     @BeforeAll
     static void createRelations(){
+        PrimitiveSetObject primitiveSetObject = new PrimitiveSetObject();
         //load set object
-        source = SetObject.load("src/test/data/bounds/set_object_r_test.xml");
-        target = SetObject.load("src/test/data/bounds/set_object_t_test.xml");
+        source = primitiveSetObject.load("src/test/data/bounds/set_object_r_test.xml", "primitive");
+        target = primitiveSetObject.load("src/test/data/bounds/set_object_t_test.xml", "primitive");
 
         sourceEl = source.getNumElements();
         targetEl = target.getNumElements();
 
+        HeytingAlgebra heytingAlgebra = new HeytingAlgebra();
         //load heyting object to create basis
-        HeytingAlgebra heytingAlgebraT = HeytingAlgebra.load("src/test/data/composition/BooleanHA.xml");
+        HeytingAlgebra heytingAlgebraT = heytingAlgebra.load("src/test/data/composition/BooleanHA.xml", "heyting");
         truthT = new Basis(heytingAlgebraT, new int[2][2]);
 
         //create R relation

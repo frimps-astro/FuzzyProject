@@ -1,26 +1,25 @@
 package xmlutils;
 
 import exceptions.EmptyNodesException;
-import main.SetObject;
+import main.PrimitiveSetObject;
 import org.w3c.dom.Node;
 
-public class SetObjectXMLNodeConverter implements XMLNodeConverter{
+public class PrimitiveSetObjectXMLNodeConverter implements XMLNodeConverter{
 
     @Override
-	public SetObject convertXMLNode(Node node) {
+	public PrimitiveSetObject convertXMLNode(Node node) {
         int numElements = XMLTools.getIntAttribute(node, "size");
 
-//        if ()
         String[] elementNames = node.getTextContent().trim().split(",");
 
         try {
             if (elementNames[0].isEmpty())
-                throw new EmptyNodesException("Elements node in SetObject cannot be empty");
+                throw new EmptyNodesException("Elements node in PrimitiveSetObject cannot be empty");
         } catch (EmptyNodesException ex) {
             throw new RuntimeException(ex);
         }
 
-        return new SetObject(numElements, elementNames);
+        return new PrimitiveSetObject(numElements, elementNames);
     }
 
 }

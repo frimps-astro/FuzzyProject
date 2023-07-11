@@ -32,8 +32,10 @@ public class HeytingAlgebraXMLNodeConverter implements XMLNodeConverter{
         int numElements = XMLTools.getIntAttribute(node, "size");
 
         NodeList nodeList = node.getChildNodes();
+
         for (int i = 0; i < nodeList.getLength(); i++) {
             Node n = nodeList.item(i);
+
             if (n.getNodeName().equalsIgnoreCase("elements")) {
                 elements = n.getTextContent().trim().strip().split(",");
             }

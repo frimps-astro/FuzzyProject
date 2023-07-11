@@ -3,25 +3,27 @@ package test;
 import main.Basis;
 import main.HeytingAlgebra;
 import main.Relation;
-import main.SetObject;
+import main.PrimitiveSetObject;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 public class TestSymmetricQuotient {
     static Relation A, B;
-    static SetObject source, target, intersection;
+    static PrimitiveSetObject source, target, intersection;
     static  Basis basis;
 
     @BeforeAll
     static void createRelations(){
+        PrimitiveSetObject primitiveSetObject = new PrimitiveSetObject();
+        HeytingAlgebra heyting = new HeytingAlgebra();
         //load set object
-        source = SetObject.load("src/test/data/syq/set_object_A_test.xml");
-        target = SetObject.load("src/test/data/syq/set_object_B_test.xml");
-        intersection = SetObject.load("src/test/data/syq/set_object_intersection_test.xml");
+        source = primitiveSetObject.load("src/test/data/syq/set_object_A_test.xml", "primitive");
+        target = primitiveSetObject.load("src/test/data/syq/set_object_B_test.xml", "primitive");
+        intersection = primitiveSetObject.load("src/test/data/syq/set_object_intersection_test.xml", "primitive");
 
         //load heyting object to create basis
-        HeytingAlgebra heytingAlgebra = HeytingAlgebra.load("src/test/data/composition/BooleanHA.xml");
+        HeytingAlgebra heytingAlgebra = heyting.load("src/test/data/composition/BooleanHA.xml", "heyting");
         basis = new Basis(heytingAlgebra, new int[2][2]);
 
         //create A relation

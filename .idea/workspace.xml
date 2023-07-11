@@ -6,14 +6,44 @@
   <component name="ChangeListManager">
     <list default="true" id="d246993b-c2a2-4f1d-b93f-e949f1ff56e0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/FuzzyProject.iml" beforeDir="false" afterPath="$PROJECT_DIR$/FuzzyProject.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/production/FuzzyProject/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/FuzzyProject/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/main/Basis.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/FuzzyProject/main/Basis.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/data/set_object.xml" beforeDir="false" afterPath="$PROJECT_DIR$/production/FuzzyProject/data/set_object.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/data/set_object.xsd" beforeDir="false" afterPath="$PROJECT_DIR$/production/FuzzyProject/data/set_object.xsd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/data/set_object_out.xml" beforeDir="false" afterPath="$PROJECT_DIR$/production/FuzzyProject/data/set_object_out.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/main/HeytingAlgebra.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/FuzzyProject/main/HeytingAlgebra.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/production/FuzzyProject/main/Relation.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/FuzzyProject/main/Relation.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/main/SetObject.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/FuzzyProject/main/SetObject.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/test/TestBoundsRelation.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/FuzzyProject/test/TestBoundsRelation.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/test/TestCompositionRelation.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/FuzzyProject/test/TestCompositionRelation.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/test/TestSymmetricQuotient.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/FuzzyProject/test/TestSymmetricQuotient.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/test/data/bounds/set_object_r_test.xml" beforeDir="false" afterPath="$PROJECT_DIR$/production/FuzzyProject/test/data/bounds/set_object_r_test.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/test/data/bounds/set_object_t_test.xml" beforeDir="false" afterPath="$PROJECT_DIR$/production/FuzzyProject/test/data/bounds/set_object_t_test.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/test/data/composition/set_object_test.xml" beforeDir="false" afterPath="$PROJECT_DIR$/production/FuzzyProject/test/data/composition/set_object_test.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/test/data/syq/set_object_A_test.xml" beforeDir="false" afterPath="$PROJECT_DIR$/production/FuzzyProject/test/data/syq/set_object_A_test.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/test/data/syq/set_object_B_test.xml" beforeDir="false" afterPath="$PROJECT_DIR$/production/FuzzyProject/test/data/syq/set_object_B_test.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/test/data/syq/set_object_intersection_test.xml" beforeDir="false" afterPath="$PROJECT_DIR$/production/FuzzyProject/test/data/syq/set_object_intersection_test.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/production/FuzzyProject/xmlutils/HeytingAlgebraXMLNodeConverter.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/FuzzyProject/xmlutils/HeytingAlgebraXMLNodeConverter.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/xmlutils/SetObjectXMLNodeConverter.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Basis.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Basis.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/heyting_out.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/set_object.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/set_object.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/set_object.xsd" beforeDir="false" afterPath="$PROJECT_DIR$/src/data/set_object.xsd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/data/set_object_out.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/HeytingAlgebra.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/HeytingAlgebra.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/Relation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Relation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/SetObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/PrimitiveSetObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/TestBoundsRelation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/TestBoundsRelation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/TestCompositionRelation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/TestCompositionRelation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/TestSymmetricQuotient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/TestSymmetricQuotient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/data/bounds/set_object_r_test.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/data/bounds/set_object_r_test.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/data/bounds/set_object_t_test.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/data/bounds/set_object_t_test.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/data/composition/set_object_test.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/data/composition/set_object_test.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/data/syq/set_object_A_test.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/data/syq/set_object_A_test.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/data/syq/set_object_B_test.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/data/syq/set_object_B_test.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/data/syq/set_object_intersection_test.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/data/syq/set_object_intersection_test.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/xmlutils/HeytingAlgebraXMLNodeConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/xmlutils/HeytingAlgebraXMLNodeConverter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/xmlutils/SetObjectXMLNodeConverter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/xmlutils/PrimitiveSetObjectXMLNodeConverter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/xmlutils/XMLObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/xmlutils/XMLObject.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,6 +55,7 @@
       <list>
         <option value="Interface" />
         <option value="Class" />
+        <option value="Enum" />
       </list>
     </option>
   </component>
@@ -57,7 +88,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "jdk.selected.JAVA_MODULE": "openjdk-20",
-    "last_opened_file_path": "/Users/frimps/Documents/BROCK/SPRING/FuzzyProject/src/test/data/syq",
+    "last_opened_file_path": "/Users/frimps/Documents/BROCK/SPRING/FuzzyProject/src/test/data",
     "onboarding.tips.debug.path": "/Users/frimps/Documents/BROCK/SPRING/FuzzyProject/FuzzyProjectNew/src/Main.java",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15234375",
@@ -70,12 +101,13 @@
       <recent name="" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/test/data" />
       <recent name="$PROJECT_DIR$/src/test/data/syq" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/data" />
       <recent name="$PROJECT_DIR$/src/test/data/bounds" />
       <recent name="$PROJECT_DIR$/src/test/data/composition" />
-      <recent name="$PROJECT_DIR$/src/data" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="xmlutils" />
@@ -92,7 +124,7 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestBoundsRelation" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TestPiRhoRelations" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="FuzzyProject" />
       <extension name="coverage">
         <pattern>
@@ -101,13 +133,13 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="test" />
-      <option name="MAIN_CLASS_NAME" value="test.TestBoundsRelation" />
+      <option name="MAIN_CLASS_NAME" value="test.TestPiRhoRelations" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestBoundsRelation.testLowerBound" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TestPiRhoRelations.testFunctions" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="FuzzyProject" />
       <extension name="coverage">
         <pattern>
@@ -116,30 +148,14 @@
         </pattern>
       </extension>
       <option name="PACKAGE_NAME" value="test" />
-      <option name="MAIN_CLASS_NAME" value="test.TestBoundsRelation" />
-      <option name="METHOD_NAME" value="testLowerBound" />
+      <option name="MAIN_CLASS_NAME" value="test.TestPiRhoRelations" />
+      <option name="METHOD_NAME" value="testFunctions" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TestBoundsRelation.testUpperBound" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="FuzzyProject" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="test.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="PACKAGE_NAME" value="test" />
-      <option name="MAIN_CLASS_NAME" value="test.TestBoundsRelation" />
-      <option name="METHOD_NAME" value="testUpperBound" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="TestSymmetricQuotient.testASyqB" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="TestSymmetricQuotient" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="FuzzyProject" />
       <extension name="coverage">
         <pattern>
@@ -149,8 +165,21 @@
       </extension>
       <option name="PACKAGE_NAME" value="test" />
       <option name="MAIN_CLASS_NAME" value="test.TestSymmetricQuotient" />
-      <option name="METHOD_NAME" value="testASyqB" />
-      <option name="TEST_OBJECT" value="method" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="test in FuzzyProject" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="FuzzyProject" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="test.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="test" />
+      <option name="TEST_OBJECT" value="package" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -158,10 +187,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
-        <item itemvalue="JUnit.TestSymmetricQuotient.testASyqB" />
-        <item itemvalue="JUnit.TestBoundsRelation" />
-        <item itemvalue="JUnit.TestBoundsRelation.testLowerBound" />
-        <item itemvalue="JUnit.TestBoundsRelation.testUpperBound" />
+        <item itemvalue="JUnit.TestPiRhoRelations" />
+        <item itemvalue="JUnit.TestPiRhoRelations.testFunctions" />
+        <item itemvalue="JUnit.test in FuzzyProject" />
+        <item itemvalue="JUnit.TestSymmetricQuotient" />
       </list>
     </recent_temporary>
   </component>
