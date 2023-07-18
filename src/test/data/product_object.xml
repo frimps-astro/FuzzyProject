@@ -1,8 +1,0 @@
-<ProductObject>
-    <Component SetObject="left" size="2">
-        a,b
-    </Component>
-    <Component SetObject="right" size="3">
-        1,2,3
-    </Component>
-</ProductObject>

@@ -1,9 +1,6 @@
 package test;
 
-import main.Basis;
-import main.HeytingAlgebra;
-import main.Relation;
-import main.PrimitiveSetObject;
+import main.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -16,19 +13,15 @@ public class TestCompositionRelation {
 
     @BeforeAll
     static void createRelations(){
-        PrimitiveSetObject primitiveSetObject = new PrimitiveSetObject();
-
-        HeytingAlgebra heyting = new HeytingAlgebra();
-
         //load set object
-        source = primitiveSetObject.load("src/test/data/composition/set_object_test.xml", "primitive");
+        source = (PrimitiveSetObject) SetObject.load("src/test/data/composition/primitive_set_object_test.xml");
         target = source;
 
         sourceEl = source.getNumElements();
         targetEl = target.getNumElements();
 
         //load heyting object to create basis
-        HeytingAlgebra heytingAlgebra = heyting.load("src/test/data/composition/BooleanHA.xml", "heyting");
+        HeytingAlgebra heytingAlgebra = HeytingAlgebra.load("src/test/data/composition/BooleanHA.xml");
         basis = new Basis(heytingAlgebra, new int[2][2]);
 
         //create F relation

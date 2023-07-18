@@ -1,26 +1,33 @@
 package main;
 
+import xmlutils.XMLReader;
+
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
 
-public class ProductObject extends SetObject<ProductObject>{
-    private ProductComponent left, right;
+public class ProductSetObject extends SetObject{
+    private SetObject left, right;
+    private String leftFilename, rightFilename;
 
-    public ProductObject(ProductComponent left, ProductComponent right) {
+    public ProductSetObject(SetObject left, SetObject right, String leftFilename, String rightFilename) {
         this.left = left;
         this.right = right;
+        this.leftFilename = leftFilename;
+        this.rightFilename = rightFilename;
     }
 
-    public ProductObject() {
+    public ProductSetObject() {
     }
 
-    public SetObject<ProductObject> getLeft() {
+
+    public SetObject getLeft() {
         return left;
     }
 
-    public SetObject<ProductObject> getRight() {
+    public SetObject getRight() {
         return right;
     }
 
@@ -48,6 +55,10 @@ public class ProductObject extends SetObject<ProductObject>{
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+
+        //save product objects
+        this.left.save("src/data/left_set_object_out.xml");
+        this.right.save("src/data/right_set_object_out.xml");
     }
 
     @Override
@@ -57,13 +68,10 @@ public class ProductObject extends SetObject<ProductObject>{
         //Elements
         setObjectXML.append("<ProductObject>\n");
 
-        left.setPosition("left");
-        right.setPosition("right");
+        setObjectXML.append("\t<Component SetObject=\"").append(this.leftFilename).append("\"></Component>\n");
+        setObjectXML.append("\t<Component SetObject=\"").append(this.rightFilename).append("\"></Component>");
 
-        setObjectXML.append(left.toXMLString());
-        setObjectXML.append(right.toXMLString());
-
-        setObjectXML.append("</ProductObject>");
+        setObjectXML.append("\n</ProductObject>");
 
         return setObjectXML.toString();
     }

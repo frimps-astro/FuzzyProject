@@ -1,13 +1,13 @@
 package main;
 
-import xmlutils.PrimitiveSetObjectXMLNodeConverter;
-import xmlutils.XMLReader;
 
+import xmlutils.SetObjectXMLNodeConverter;
+import xmlutils.XMLReader;
 
 import java.io.*;
 import java.util.Arrays;
 
-public class PrimitiveSetObject extends SetObject<PrimitiveSetObject> {
+public class PrimitiveSetObject extends SetObject {
     private int numElements;
     private String[] elementNames;
 
@@ -34,7 +34,7 @@ public class PrimitiveSetObject extends SetObject<PrimitiveSetObject> {
     public String toXMLString() {
         StringBuilder setObjectXML = new StringBuilder();
 
-        setObjectXML.append("<PrimitiveSetObject size=\"").append(getNumElements()).append("\">\n");
+        setObjectXML.append("<SetObject size=\"").append(getNumElements()).append("\">\n");
 
         //Elements
         setObjectXML.append("\t<Elements>\n\t\t");
@@ -45,7 +45,7 @@ public class PrimitiveSetObject extends SetObject<PrimitiveSetObject> {
                 .replace(" ",""));
         setObjectXML.append("\n\t</Elements>\n");
 
-        setObjectXML.append("</PrimitiveSetObject>"); //end root node
+        setObjectXML.append("</SetObject>"); //end root node
 
         return setObjectXML.toString();
 

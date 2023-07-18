@@ -1,8 +1,4 @@
 <ProductObject>
-	<Component SetObject="left" size="2">
-		a,b
-	</Component>
-	<Component SetObject="right" size="3">
-		1,2,3
-	</Component>
+	<Component SetObject="src/data/left_set_object.xml"></Component>
+	<Component SetObject="src/data/right_set_object.xml"></Component>
 </ProductObject>

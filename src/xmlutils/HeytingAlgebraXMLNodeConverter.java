@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class HeytingAlgebraXMLNodeConverter implements XMLNodeConverter{
+public class HeytingAlgebraXMLNodeConverter implements XMLNodeConverter<HeytingAlgebra>{
 
 	@Override
     public HeytingAlgebra convertXMLNode(Node node) {

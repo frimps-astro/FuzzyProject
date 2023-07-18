@@ -4,14 +4,11 @@ import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) {
-        PrimitiveSetObject primitiveSetObject = new PrimitiveSetObject();
-        HeytingAlgebra heytingAlgebra = new HeytingAlgebra();
-        ProductObject productObject = new ProductObject();
+        SetObject source1 =  SetObject.load("src/test/data/composition/primitive_set_object_test.xml");
+        System.out.println(source1.toString());
 
-        PrimitiveSetObject source1 = primitiveSetObject.load("src/test/data/composition/set_object_test.xml", "primitive");
-        HeytingAlgebra ha = heytingAlgebra.load("src/test/data/composition/BooleanHA.xml", "heyting");
-        Basis basis = new Basis(ha,new int[2][2]);
-
+        HeytingAlgebra hey = HeytingAlgebra.load("src/test/data/composition/BooleanHA.xml");
+        Basis basis = new Basis(hey,new int[2][2]);
 
         int[][] bmatrix = { {0,0,0,0,0,0,0,0,0},
                 {0,0,1,0,0,0,0,0,0},
@@ -61,8 +58,8 @@ public class Main {
         Relation result2 = convB.composition(notG);
         System.out.println(result2);
 
-        PrimitiveSetObject source2 = primitiveSetObject.load("src/test/data/bounds/set_object_r_test.xml", "primitive");
-        PrimitiveSetObject unit = primitiveSetObject.load("src/test/data/bounds/set_object_t_test.xml", "primitive");
+        SetObject source2 = SetObject.load("src/test/data/bounds/set_object_r_test.xml");
+        SetObject unit =  SetObject.load("src/test/data/bounds/set_object_t_test.xml");
         int[][] rmatrix = { {1,0,0,0,0,0,0},
                 {1,1,0,0,0,0,0},
                 {1,1,1,0,0,0,0},
@@ -85,9 +82,9 @@ public class Main {
         System.out.println(result4);
 
         //Syq(A, B)
-        PrimitiveSetObject sourceSyq = primitiveSetObject.load("src/test/data/syq/set_object_A_test.xml", "primitive");
-        PrimitiveSetObject targetSyq= primitiveSetObject.load("src/test/data/syq/set_object_B_test.xml", "primitive");
-        PrimitiveSetObject intersection = primitiveSetObject.load("src/test/data/syq/set_object_intersection_test.xml", "primitive");
+        SetObject sourceSyq =  SetObject.load("src/test/data/syq/set_object_A_test.xml");
+        SetObject targetSyq= SetObject.load("src/test/data/syq/set_object_B_test.xml");
+        SetObject intersection = SetObject.load("src/test/data/syq/set_object_intersection_test.xml");
 
         //create A relation
         int[][] aMatrix = {
@@ -110,28 +107,28 @@ public class Main {
         Relation resultSyq = A.syq(B);
         System.out.println(resultSyq);
 
-        PrimitiveSetObject setObject = primitiveSetObject.load("src/data/set_object.xml", "primitive");
+        PrimitiveSetObject setObject = (PrimitiveSetObject) SetObject.load("src/data/primitive_set_object.xml");
         System.out.println("PrimitiveSetObject-> "+setObject.toString());
 
-        HeytingAlgebra hey = heytingAlgebra.load("src/data/heyting.xml", "heyting");
-        System.out.println("Heyting-> "+hey.toString());
+        HeytingAlgebra heytingAlgebra = HeytingAlgebra.load("src/data/heyting.xml");
+        System.out.println("Heyting-> "+heytingAlgebra.toString());
 
         //product set objects
-        ProductObject product = productObject.load("src/data/product_object.xml", "product");
-        System.out.println("\nProductObject: "+product.toString());
+        ProductSetObject productSetObject = (ProductSetObject) SetObject.load("src/data/product_object.xml");
+        System.out.println("\nProductObject: "+productSetObject.toString());
 
         //test PI Relation
-        Relation piRelation = Relation.pi(product, basis, 0);
+        Relation piRelation = Relation.pi(productSetObject, basis, 0);
         System.out.println("\nPi: "+piRelation.piToString());
 
         //test RHO Relation
-        Relation rhoRelation = Relation.rho(product, basis, 0);
+        Relation rhoRelation = Relation.rho(productSetObject, basis, 0);
         System.out.println("\nRho: "+rhoRelation.rhoToString());
 
         try{
-            setObject.save("src/data/set_object_out.xml");
-            hey.save("src/data/heyting_out.xml");
-            product.save("src/data/product_object_out.xml");
+            setObject.save("src/data/primitive_set_object_out.xml");
+            heytingAlgebra.save("src/data/heyting_out.xml");
+            productSetObject.save("src/data/product_object_out.xml");
         }catch (IOException ex){
             System.out.println(ex.getMessage());
         }

@@ -11,7 +11,7 @@ import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.List;
 
-public class HeytingAlgebra extends SetObject<HeytingAlgebra> {
+public class HeytingAlgebra implements XMLObject{
     private  int numElements;
     private String[] elementNames;
     private int[][] meet;
@@ -60,6 +60,15 @@ public class HeytingAlgebra extends SetObject<HeytingAlgebra> {
     }
 
     public HeytingAlgebra(){}
+
+    public static HeytingAlgebra load(String filename) {
+        //load from xml file
+        XMLReader<HeytingAlgebra> reader = new XMLReader<>();
+        reader.setXMLSchema(System.getProperty("user.dir") + "/src/data/heyting.xsd");
+        reader.setXMLNodeConverter(new HeytingAlgebraXMLNodeConverter());
+
+        return reader.readXML(new File(filename));
+    }
 
     public void save(String filename) throws IOException {
         //save as xml

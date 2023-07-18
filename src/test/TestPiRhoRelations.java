@@ -7,16 +7,14 @@ import org.junit.jupiter.api.Test;
 
 
 public class TestPiRhoRelations {
-    static ProductObject productObject;
+    static ProductSetObject productSetObject;
     static Basis basis;
     @BeforeAll
     static void setUp(){
-        HeytingAlgebra heyting = new HeytingAlgebra();
-        HeytingAlgebra heytingAlgebra = heyting.load("src/test/data/composition/BooleanHA.xml", "heyting");
+        HeytingAlgebra heytingAlgebra = HeytingAlgebra.load("src/test/data/composition/BooleanHA.xml");
         basis = new Basis(heytingAlgebra, new int[2][2]);
-        ProductObject product = new ProductObject();
 
-        productObject = product.load("src/test/data/product_object.xml", "product");
+        productSetObject = (ProductSetObject) SetObject.load("src/test/data/product_object_test.xml");
     }
 
     @Test
@@ -30,7 +28,7 @@ public class TestPiRhoRelations {
                 {0,1},
         };
 
-        Relation piRelation = Relation.pi(productObject, basis, 0);
+        Relation piRelation = Relation.pi(productSetObject, basis, 0);
 
         System.out.println("Pi: "+piRelation.piToString());
 
@@ -48,7 +46,7 @@ public class TestPiRhoRelations {
                 {0,0,1},
         };
 
-        Relation rhoRelation = Relation.rho(productObject, basis, 0);
+        Relation rhoRelation = Relation.rho(productSetObject, basis, 0);
 
         System.out.println("Rho: "+rhoRelation.rhoToString());
 

@@ -1,9 +1,6 @@
 package test;
 
-import main.Basis;
-import main.HeytingAlgebra;
-import main.Relation;
-import main.PrimitiveSetObject;
+import main.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -16,17 +13,15 @@ public class TestBoundsRelation {
 
     @BeforeAll
     static void createRelations(){
-        PrimitiveSetObject primitiveSetObject = new PrimitiveSetObject();
         //load set object
-        source = primitiveSetObject.load("src/test/data/bounds/set_object_r_test.xml", "primitive");
-        target = primitiveSetObject.load("src/test/data/bounds/set_object_t_test.xml", "primitive");
+        source = (PrimitiveSetObject) SetObject.load("src/test/data/bounds/set_object_r_test.xml");
+        target = (PrimitiveSetObject) SetObject.load("src/test/data/bounds/set_object_t_test.xml");
 
         sourceEl = source.getNumElements();
         targetEl = target.getNumElements();
 
-        HeytingAlgebra heytingAlgebra = new HeytingAlgebra();
         //load heyting object to create basis
-        HeytingAlgebra heytingAlgebraT = heytingAlgebra.load("src/test/data/composition/BooleanHA.xml", "heyting");
+        HeytingAlgebra heytingAlgebraT = HeytingAlgebra.load("src/test/data/composition/BooleanHA.xml");
         truthT = new Basis(heytingAlgebraT, new int[2][2]);
 
         //create R relation
