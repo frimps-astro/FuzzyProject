@@ -1,4 +1,0 @@
-<ProductObject>
-	<Component SetObject="src/data/left_set_object.xml"></Component>
-	<Component SetObject="src/data/right_set_object.xml"></Component>
-</ProductObject>

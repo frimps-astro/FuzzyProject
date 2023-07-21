@@ -7,9 +7,10 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.List;
+import static classutils.LoadPaths.HEYTINGALGEBRAPATH;
+import static classutils.LoadPaths.XSDPATH;
 
 public class HeytingAlgebra implements XMLObject{
     private  int numElements;
@@ -64,10 +65,10 @@ public class HeytingAlgebra implements XMLObject{
     public static HeytingAlgebra load(String filename) {
         //load from xml file
         XMLReader<HeytingAlgebra> reader = new XMLReader<>();
-        reader.setXMLSchema(System.getProperty("user.dir") + "/src/data/heyting.xsd");
+        reader.setXMLSchema(XSDPATH + "heyting.xsd");
         reader.setXMLNodeConverter(new HeytingAlgebraXMLNodeConverter());
 
-        return reader.readXML(new File(filename));
+        return reader.readXML(new File(HEYTINGALGEBRAPATH + filename + ".xml"));
     }
 
     public void save(String filename) throws IOException {

@@ -1,66 +1,40 @@
 package main;
 
-
-import xmlutils.SetObjectXMLNodeConverter;
-import xmlutils.XMLReader;
-
 import java.io.*;
 import java.util.Arrays;
+import static classutils.LoadPaths.SETOBJECTPATH;
 
 public class PrimitiveSetObject extends SetObject {
-    private int numElements;
-    private String[] elementNames;
-
-    public PrimitiveSetObject(int numElements, String[] elementNames) {
-        this.numElements = numElements;
+    
+    public PrimitiveSetObject(String[] elementNames) {
         this.elementNames = elementNames;
     }
-
-    public PrimitiveSetObject(){};
-
-    public void save(String filename) throws IOException {
-        //save as xml
-        FileWriter writer = new FileWriter(filename);
-
-        try {
-            writer.write(toXMLString());
-            writer.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+    
+    public PrimitiveSetObject(String name, String[] elementNames) {
+        this(elementNames);
+        this.name = name;
+    }
+    
+    @Override
+    public void save() throws IOException {
+        SetObjectStorage.getInstance().save(name, toXMLString());
     }
 
     @Override
     public String toXMLString() {
         StringBuilder setObjectXML = new StringBuilder();
-
-        setObjectXML.append("<SetObject size=\"").append(getNumElements()).append("\">\n");
-
-        //Elements
-        setObjectXML.append("\t<Elements>\n\t\t");
-        setObjectXML.append(Arrays.toString(getElementNames())
-                //remove extra characters and white spaces
-                .replace("[","")
-                .replace("]","")
-                .replace(" ",""));
-        setObjectXML.append("\n\t</Elements>\n");
-
-        setObjectXML.append("</SetObject>"); //end root node
-
+        setObjectXML.append("<PrimitiveSetObject>\n\t");
+        for(int i=0; i<elementNames.length; i++) {
+            setObjectXML.append(elementNames[i]);
+            if (i<elementNames.length-1) setObjectXML.append(",");
+        }
+        setObjectXML.append("\n</PrimitiveSetObject>");
         return setObjectXML.toString();
-
     }
 
-    public int getNumElements() {
-        return numElements;
-    }
-
-    public String[] getElementNames() {
-        return elementNames;
-    }
-
+    @Override
     public String toString() {
-        return "Number of Elements: " + numElements + " elements: " + Arrays.toString(elementNames);
+        return "Number of Elements: " + elementNames.length + " elements: " + Arrays.toString(elementNames);
     }
 }
 

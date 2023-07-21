@@ -1,10 +1,77 @@
+import java.util.Arrays;
 import main.*;
-
-import java.io.IOException;
+import static main.Relation.pi;
+import static main.Relation.rho;
+import static main.Relation.iota;
+import static main.Relation.kappa;
 
 public class Main {
     public static void main(String[] args) {
-        SetObject source1 =  SetObject.load("src/test/data/composition/primitive_set_object_test.xml");
+        
+        SetObject obj1 = SetObject.load("A");
+        System.out.println(obj1.getName());
+        System.out.println(obj1.getNumElements());
+        System.out.println(Arrays.toString(obj1.getElementNames()));
+        
+        SetObject obj2 = SetObject.load("B");
+        System.out.println(obj2.getName());
+        System.out.println(obj2.getNumElements());
+        System.out.println(Arrays.toString(obj2.getElementNames()));
+        
+        SetObject prod1 = new ProductSetObject("AxB",obj1,obj2);
+        System.out.println(prod1.getName());
+        System.out.println(prod1.getNumElements());
+        System.out.println(Arrays.toString(prod1.getElementNames()));
+        
+        SetObject prod2 = SetObject.load("AxB");
+        System.out.println(prod2.getName());
+        System.out.println(prod2.getNumElements());
+        System.out.println(Arrays.toString(prod2.getElementNames()));
+        
+        SetObject prod3 = SetObject.load("(AxB)xA");
+        System.out.println(prod3.getName());
+        System.out.println(prod3.getNumElements());
+        System.out.println(Arrays.toString(prod3.getElementNames()));
+
+        SetObject sum1 = new SumSetObject("A+B", obj1, obj2);
+        System.out.println(sum1.getName());
+        System.out.println(sum1.getNumElements());
+        System.out.println(Arrays.toString(sum1.getElementNames()));
+
+        SetObject sum2 = SetObject.load("(A+B)+A");
+        System.out.println(sum2.getName());
+        System.out.println(sum2.getNumElements());
+        System.out.println(Arrays.toString(sum2.getElementNames()));
+        
+        try {
+            obj1.setName("Aout");
+            obj1.save();
+            prod3.setName("(AxB)xAout");
+            prod3.save();
+
+            sum2.setName("(A+B)+Aout");
+            sum2.save();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        
+        HeytingAlgebra hey = HeytingAlgebra.load("BooleanHA");
+        Basis basis = new Basis(hey,new int[2][2]);
+        
+        Relation pi = pi((ProductSetObject) prod2, basis);
+        System.out.println(pi);
+        
+        Relation rho = rho((ProductSetObject) prod2, basis);
+        System.out.println(rho);
+
+        Relation iota = iota((SumSetObject) sum1, basis);
+        System.out.println(iota);
+
+        Relation kappa = kappa((SumSetObject) sum1, basis);
+        System.out.println(kappa);
+
+        
+        /*SetObject source1 =  SetObject.load("src/test/data/composition/primitive_set_object_test.xml");
         System.out.println(source1.toString());
 
         HeytingAlgebra hey = HeytingAlgebra.load("src/test/data/composition/BooleanHA.xml");
@@ -131,6 +198,6 @@ public class Main {
             productSetObject.save("src/data/product_object_out.xml");
         }catch (IOException ex){
             System.out.println(ex.getMessage());
-        }
+        }*/
     }
 }

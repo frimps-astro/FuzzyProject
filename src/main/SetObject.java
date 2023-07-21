@@ -1,26 +1,35 @@
 package main;
 
-import xmlutils.*;
-
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
+import static classutils.LoadPaths.SETOBJECTPATH;
+import xmlutils.SetObjectXMLReader;
+import xmlutils.XMLObject;
 
 public abstract class SetObject implements XMLObject {
-
-    abstract int getNumElements();
-
-    abstract String[] getElementNames();
-
-    public static SetObject load(String filename){
-        XMLReader<SetObject> reader = new XMLReader<>();
-        //load from xml file
-        reader.setXMLSchema(System.getProperty("user.dir") + "/src/data/set_object.xsd");
-        reader.setXMLNodeConverter(new SetObjectXMLNodeConverter());
-
-        return reader.readXML(new File(filename));
+    
+    protected String name;
+    protected String[] elementNames;
+    
+    public String getName() {
+        return name;
+    }
+    
+    public void setName(String name) {
+        this.name = name;
     }
 
-    abstract void save(String filename) throws IOException;
+    public int getNumElements() {
+        return elementNames.length;
+    };
 
+    public String[] getElementNames() {
+        return elementNames;
+    };
+
+    public static SetObject load(String filename){
+        return SetObjectStorage.getInstance().load(filename);
+    }
+
+    public abstract void save() throws IOException;
 }
