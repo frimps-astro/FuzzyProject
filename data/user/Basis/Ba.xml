@@ -1,0 +1,7 @@
+<Basis>
+    <HeytingAlgebra name="H"/>
+    <Star>
+        0,0,
+        0,1
+    </Star>
+</Basis>

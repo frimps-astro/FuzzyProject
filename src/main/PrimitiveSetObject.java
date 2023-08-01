@@ -1,8 +1,9 @@
 package main;
 
-import java.io.*;
+import storage.SetObjectStorage;
+
+import java.io.IOException;
 import java.util.Arrays;
-import static classutils.LoadPaths.SETOBJECTPATH;
 
 public class PrimitiveSetObject extends SetObject {
     

@@ -1,11 +1,11 @@
 package main;
 
-import java.io.FileWriter;
+import storage.SetObjectStorage;
+
 import java.io.IOException;
 import java.util.Arrays;
-import static classutils.LoadPaths.SETOBJECTPATH;
 
-public class ProductSetObject extends SetObject{
+public class ProductSetObject extends SetObject {
     
     private final SetObject left, right;
 
@@ -28,6 +28,7 @@ public class ProductSetObject extends SetObject{
         this(left,right);
         this.name = name;
 
+        //once a SetObject is created by hand, put to storage
        SetObjectStorage.getInstance().put(this);
     }
 

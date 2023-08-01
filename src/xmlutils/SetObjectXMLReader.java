@@ -2,11 +2,11 @@ package xmlutils;
 
 import static classutils.LoadPaths.XSDPATH;
 import java.util.List;
-import main.PrimitiveSetObject;
-import main.ProductSetObject;
-import main.SetObject;
-import main.SumSetObject;
+
+import main.*;
 import org.w3c.dom.Node;
+import main.SetObject;
+
 import static xmlutils.XMLTools.getChildNodes;
 import static xmlutils.XMLTools.getStringAttribute;
 
@@ -45,6 +45,12 @@ public class SetObjectXMLReader extends XMLReader<SetObject> implements XMLNodeC
                 SetObject left = SetObject.load(getStringAttribute(clist.get(0),"SetObject"));
                 SetObject right = SetObject.load(getStringAttribute(clist.get(1),"SetObject"));
                 return new SumSetObject(left,right);
+            }
+            case "PowerSetObject" -> {
+                List<Node> clist = getChildNodes(node);
+                SetObject body = SetObject.load(getStringAttribute(clist.get(0),"body"));
+                Basis basis = Basis.load(getStringAttribute(clist.get(1),"basis"));
+                return new PowerSetObject(body, basis);
             }
         }
         return null;

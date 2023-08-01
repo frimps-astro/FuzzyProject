@@ -1,9 +1,8 @@
 package main;
 
-import java.io.File;
 import java.io.IOException;
-import static classutils.LoadPaths.SETOBJECTPATH;
-import xmlutils.SetObjectXMLReader;
+
+import storage.SetObjectStorage;
 import xmlutils.XMLObject;
 
 public abstract class SetObject implements XMLObject {

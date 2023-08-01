@@ -1,11 +1,11 @@
 package main;
 
-import java.io.FileWriter;
+import storage.SetObjectStorage;
+
 import java.io.IOException;
 import java.util.Arrays;
-import static classutils.LoadPaths.SETOBJECTPATH;
 
-public class SumSetObject extends SetObject{
+public class SumSetObject extends SetObject {
 
     private final SetObject left, right;
 
@@ -18,9 +18,9 @@ public class SumSetObject extends SetObject{
         elementNames = new String[sum];
         for(int i=0; i<sum; i++) {
             if (i < m){
-                elementNames[i] = "i(" + lelems[i] +")";
+                elementNames[i] = "\u03b9(" + lelems[i] +")";
             } else {
-                elementNames[i] = "k(" + relems[i-m] +")";
+                elementNames[i] = "\u03ba(" + relems[i-m] +")";
             }
         }
         this.left = left;
@@ -31,6 +31,7 @@ public class SumSetObject extends SetObject{
         this(left,right);
         this.name = name;
 
+        //once a SetObject is created by hand, put to storage
         SetObjectStorage.getInstance().put(this);
     }
 
@@ -54,7 +55,7 @@ public class SumSetObject extends SetObject{
         StringBuilder setObjectXML = new StringBuilder();
         setObjectXML.append("<SumSetObject>\n");
         setObjectXML.append("\t<Component SetObject=\"");
-        setObjectXML.append(left.getName().replace("out",""));
+        setObjectXML.append(left.getName().replace("out","")); //remove out keyword
         setObjectXML.append("\"/>\n\t<Component SetObject=\"");
         setObjectXML.append(right.getName().replace("out",""));
         setObjectXML.append("\"/>\n</SumSetObject>");

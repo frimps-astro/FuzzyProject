@@ -1,6 +1,7 @@
 package main;
 
 import exceptions.InvalidXYvalueException;
+import storage.HeytingAlgebraStorage;
 import xmlutils.*;
 
 import java.io.File;
@@ -20,6 +21,16 @@ public class HeytingAlgebra implements XMLObject{
     private  int[][] impl;
     private  int bot;
     private  int top;
+
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public int getNumElements() {
         return numElements;
@@ -63,24 +74,11 @@ public class HeytingAlgebra implements XMLObject{
     public HeytingAlgebra(){}
 
     public static HeytingAlgebra load(String filename) {
-        //load from xml file
-        XMLReader<HeytingAlgebra> reader = new XMLReader<>();
-        reader.setXMLSchema(XSDPATH + "heyting.xsd");
-        reader.setXMLNodeConverter(new HeytingAlgebraXMLNodeConverter());
-
-        return reader.readXML(new File(HEYTINGALGEBRAPATH + filename + ".xml"));
+        return HeytingAlgebraStorage.getInstance().load(filename);
     }
 
-    public void save(String filename) throws IOException {
-        //save as xml
-        FileWriter writer = new FileWriter(filename);
-
-        try {
-            writer.write(toXMLString());
-            writer.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+    public void save() throws IOException {
+        HeytingAlgebraStorage.getInstance().save(name, toXMLString());
     }
 
     private boolean leq(int x, int y) throws InvalidXYvalueException{
@@ -114,8 +112,7 @@ public class HeytingAlgebra implements XMLObject{
         heytingXML.append("\t<Elements>\n\t\t");
         heytingXML.append(Arrays.toString(elementNames)
                 //remove extra characters and white spaces
-                .replace("[","")
-                .replace("]","")
+                .replaceAll("[\\[\\] ]", "")
                 .replace(" ",""));
         heytingXML.append("\n\t</Elements>\n");
 

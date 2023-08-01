@@ -1,6 +1,8 @@
 package main;
 
 import exceptions.OperationExecutionException;
+
+import java.util.Arrays;
 import java.util.function.BiFunction;
 
 public class Relation {
@@ -129,6 +131,26 @@ public class Relation {
             }
         }
         return new Relation(right, sumSetObject, basis, matrix);
+    }
+
+    public static Relation epsi(PowerSetObject powerSetObject){
+        SetObject body = powerSetObject.getBody();
+        Basis basis = powerSetObject.getBasis();
+        int source = body.getNumElements();
+        int target = powerSetObject.getNumElements();
+        int[][] matrix = new int[source][target];
+        for (int i = 0; i<source; i++) {
+            for (int j = 0; j< target; j++) {
+                //get set at j and subset at i, then degree element at 1
+                String degreeElement = powerSetObject.getElementNames()[j] //get set a j
+                        .replaceAll("[{}]", "") //replace {}
+                        .split(",")[i] //get subset at i
+                        .split("\\|")[1]; // get degree element at 1
+
+                matrix[i][j] = Arrays.stream(basis.getElementNames()).toList().indexOf(degreeElement);
+            }
+        }
+        return new Relation(body, powerSetObject, basis, matrix);
     }
     
     public int[][] getMatrix() {
