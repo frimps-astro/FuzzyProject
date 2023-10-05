@@ -1,19 +1,9 @@
 package main;
 
 import storage.BasisStorage;
-import xmlutils.BasisXMLReader;
-import xmlutils.HeytingAlgebraXMLReader;
 import xmlutils.XMLObject;
-import xmlutils.XMLReader;
-
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-
-import static classutils.LoadPaths.*;
 
 public class Basis implements XMLObject {
     private final HeytingAlgebra heytingAlgebra;
@@ -31,15 +21,6 @@ public class Basis implements XMLObject {
         this.name = name;
 
         BasisStorage.getInstance().put(this);
-    }
-
-    public static Basis load(String filename) {
-        //load from xml file
-        return BasisStorage.getInstance().load(filename);
-    }
-
-    public void save() throws IOException {
-        BasisStorage.getInstance().save(name, toXMLString());
     }
 
     @Override
@@ -81,6 +62,9 @@ public class Basis implements XMLObject {
 
     public String[] getElementNames(){
         return heytingAlgebra.getElementNames();
+    }
+    public String getElementNames(Integer integer) {
+        return heytingAlgebra.getElementNames()[integer];
     }
     public int getBot(){
         return heytingAlgebra.getBot();

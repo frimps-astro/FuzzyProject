@@ -2,7 +2,6 @@ package main;
 
 import storage.SetObjectStorage;
 
-import java.io.IOException;
 import java.util.Arrays;
 
 public class ProductSetObject extends SetObject {
@@ -38,13 +37,6 @@ public class ProductSetObject extends SetObject {
 
     public SetObject getRight() {
         return right;
-    }
-
-    @Override
-    public void save() throws IOException {
-        SetObjectStorage.getInstance().save(name, toXMLString());
-        this.left.save();
-        this.right.save();
     }
 
     @Override

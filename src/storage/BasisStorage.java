@@ -41,7 +41,7 @@ public class BasisStorage{
         }
     }
 
-    public void save(String filename, String xmlString) throws IOException {
+    private void save(String filename, String xmlString) throws IOException {
             System.out.println("saving "+ filename + " to disk");
 
             FileWriter writer = new FileWriter(DATAPATH
@@ -69,6 +69,9 @@ public class BasisStorage{
         }
     }
 
+    public String[] getEntityNames(){
+        return database.keySet().toArray(new String[0]);
+    }
     public void empty(){
         database.clear();
     }

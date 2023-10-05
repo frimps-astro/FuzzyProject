@@ -33,14 +33,13 @@ public class SetObjectStorage{
                     + Project.getInstance().getName()
                     + SETOBJECTPATH + filename + ".xml"));
             result.setName(filename);
-
             System.out.println("saving "+ filename + " to storage");
             database.put(filename, result);
             return result;
         }
     }
 
-    public void save(String filename, String xmlString) throws IOException {
+    private void save(String filename, String xmlString) throws IOException {
             System.out.println("saving "+ filename + " to disk");
 
             FileWriter writer = new FileWriter(DATAPATH
@@ -66,6 +65,10 @@ public class SetObjectStorage{
         } catch (OperationExecutionException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public String[] getEntityNames(){
+        return database.keySet().toArray(new String[0]);
     }
 
     public void empty(){

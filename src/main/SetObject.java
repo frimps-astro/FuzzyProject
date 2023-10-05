@@ -1,8 +1,5 @@
 package main;
 
-import java.io.IOException;
-
-import storage.SetObjectStorage;
 import xmlutils.XMLObject;
 
 public abstract class SetObject implements XMLObject {
@@ -20,15 +17,13 @@ public abstract class SetObject implements XMLObject {
 
     public int getNumElements() {
         return elementNames.length;
-    };
+    }
 
     public String[] getElementNames() {
         return elementNames;
-    };
-
-    public static SetObject load(String filename){
-        return SetObjectStorage.getInstance().load(filename);
     }
 
-    public abstract void save() throws IOException;
+    public String getElementNames(Integer integer) {
+        return elementNames[integer];
+    }
 }

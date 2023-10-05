@@ -2,10 +2,12 @@ package main;
 
 import exceptions.OperationExecutionException;
 
+import java.awt.*;
 import java.util.Arrays;
+import java.util.List;
 import java.util.function.BiFunction;
 
-public class Relation {
+public class Relation extends Relationals{
     
     private final SetObject source;
     private final SetObject target;
@@ -17,6 +19,10 @@ public class Relation {
         this.target = target;
         this.truth = truth;
         this.matrix = matrix;
+    }
+    public Relation(String name, SetObject source, SetObject target, Basis truth, int[][] matrix) {
+        this(source, target, truth, matrix);
+        this.name = name;
     }
     
     public static Relation ideal(SetObject source, SetObject target, Basis basis, int n) {
@@ -301,5 +307,46 @@ public class Relation {
         return "Relation{" +
                 "matrix=\n" + matrixStr +
                 '}';
+    }
+
+    @Override
+    public String toXMLString() {
+            StringBuilder relationMatrix = new StringBuilder();
+            for (int i = 0; i < source.getNumElements(); i++) {
+                for (int j = 0; j < target.getNumElements(); j++) {
+                    relationMatrix.append(this.getMatrix()[i][j]).append(",");
+                }
+                relationMatrix.append("\n\t\t");
+            }
+
+            StringBuilder relationXML = new StringBuilder();
+            relationXML.append("<Relation>\n");
+
+            relationXML.append("\t<Basis name=\"");
+            relationXML.append(truth.getName().replace("out","")); //remove out keyword
+
+            relationXML.append("\"/>\n\t<SetObject Source=\"");
+            relationXML.append(source.getName().replace("out","")); //remove out keyword
+            relationXML.append("\" Target=\"");
+            relationXML.append(target.getName().replace("out","")); //remove out keyword
+
+            relationMatrix = new StringBuilder(relationMatrix.deleteCharAt(relationMatrix.lastIndexOf(",")));
+            relationXML.append("\"/>\n\t<Matrix>\n\t\t");
+            relationXML.append(relationMatrix.toString().strip());
+            relationXML.append("\n\t</Matrix>\n");
+
+            relationXML.append("</Relation>");
+
+            return relationXML.toString();
+    }
+
+    public SetObject getDom() {
+        return source;
+    }
+    public SetObject getCod() {
+        return target;
+    }
+    public Basis getAlgebra() {
+        return truth;
     }
 }

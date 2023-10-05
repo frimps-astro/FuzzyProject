@@ -2,7 +2,6 @@ package main;
 
 import storage.SetObjectStorage;
 
-import java.io.IOException;
 import java.util.Arrays;
 
 public class PrimitiveSetObject extends SetObject {
@@ -14,11 +13,8 @@ public class PrimitiveSetObject extends SetObject {
     public PrimitiveSetObject(String name, String[] elementNames) {
         this(elementNames);
         this.name = name;
-    }
-    
-    @Override
-    public void save() throws IOException {
-        SetObjectStorage.getInstance().save(name, toXMLString());
+
+        SetObjectStorage.getInstance().put(this);
     }
 
     @Override

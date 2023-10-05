@@ -1,17 +1,10 @@
 package main;
 
 import exceptions.InvalidXYvalueException;
-import storage.HeytingAlgebraStorage;
-import xmlutils.*;
+import xmlutils.XMLObject;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-import static classutils.LoadPaths.HEYTINGALGEBRAPATH;
-import static classutils.LoadPaths.XSDPATH;
 
 public class HeytingAlgebra implements XMLObject{
     private  int numElements;
@@ -69,16 +62,6 @@ public class HeytingAlgebra implements XMLObject{
         //call to compute impl, bot and top values
         computeImpl();
         computeBotTop();
-    }
-
-    public HeytingAlgebra(){}
-
-    public static HeytingAlgebra load(String filename) {
-        return HeytingAlgebraStorage.getInstance().load(filename);
-    }
-
-    public void save() throws IOException {
-        HeytingAlgebraStorage.getInstance().save(name, toXMLString());
     }
 
     private boolean leq(int x, int y) throws InvalidXYvalueException{

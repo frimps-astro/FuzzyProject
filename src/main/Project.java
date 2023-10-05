@@ -2,14 +2,13 @@ package main;
 
 import storage.BasisStorage;
 import storage.HeytingAlgebraStorage;
+import storage.RelationStorage;
 import storage.SetObjectStorage;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.stream.Stream;
 
 import static classutils.LoadPaths.*;
@@ -22,6 +21,7 @@ public class Project {
     BasisStorage basisStorage = BasisStorage.getInstance();
     HeytingAlgebraStorage heytingStorage = HeytingAlgebraStorage.getInstance();
     SetObjectStorage setObjectStorage = SetObjectStorage.getInstance();
+    RelationStorage relationStorage = RelationStorage.getInstance();
 
     public static Project getInstance() {
         if (PROJECT == null) PROJECT = new Project();
@@ -41,11 +41,16 @@ public class Project {
         basisStorage.empty();
         heytingStorage.empty();
         setObjectStorage.empty();
+        relationStorage.empty();
+       System.out.println("======== setting up " + name.toUpperCase() + " project ========");
 
         loadToStorage(BASISPATH);
         loadToStorage(HEYTINGALGEBRAPATH);
         loadToStorage(SETOBJECTPATH);
+        loadToStorage(RELATIONPATH);
 
+
+       System.out.println("======== project " + name.toUpperCase() + " setup completed ========");
     }
 
     private String getStoragePath(String storagePath){
@@ -61,6 +66,7 @@ public class Project {
                         switch (storagePath){
                            case "/Basis/" -> basisStorage.load(filename);
                            case "/HeytingAlgebras/" -> heytingStorage.load(filename);
+                           case "/Relations/" -> relationStorage.load(filename);
                             default -> setObjectStorage.load(filename);
                         }
                     });

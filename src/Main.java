@@ -1,29 +1,63 @@
+import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 import main.*;
 import main.SetObject;
+import storage.BasisStorage;
+import storage.RelationStorage;
 import storage.SetObjectStorage;
+import ui.RelationDisplay;
+import ui.UserInterface;
 
 import static main.Relation.*;
 
 public class Main {
     public static void main(String[] args) {
+        UserInterface userInterface = UserInterface.getInstance();
+        userInterface.createUI();
+
         Project project = Project.getInstance();
         project.setName("user");
         project.setProject();
-        SetObjectStorage.getInstance().createPowerSetObject("HA^B", "B", "HA");
-        SetObjectStorage.getInstance().createSumSetObject("A+C", "A", "C");
-        SetObjectStorage.getInstance().createProductSetObject("(AxB)xC", "AxB", "C");
-
-//        PrintStream out;
-//        out = new PrintStream(System.out,true, StandardCharsets.UTF_8);
+//        SetObjectStorage.getInstance().createPowerSetObject("HA^B", "B", "HA");
+//        SetObjectStorage.getInstance().createSumSetObject("A+C", "A", "C");
+//        SetObjectStorage.getInstance().createProductSetObject("(AxB)xC", "AxB", "C");
 //
-//        SetObject obj1 = SetObject.load("A");
-//        out.println(obj1.getName());
-//        out.println(obj1.getNumElements());
-//        out.println(Arrays.toString(obj1.getElementNames()));
+        PrintStream out;
+        out = new PrintStream(System.out,true, StandardCharsets.UTF_8);
+
+        SetObject pro = SetObjectStorage.getInstance().load("AxB");
+        Basis ba = BasisStorage.getInstance().load("HA");
+        Relation rho = rho((ProductSetObject) pro, ba);
+//        out.println(rho);
+
+        SetObject A = SetObjectStorage.getInstance().load("A");
+        SetObject B = SetObjectStorage.getInstance().load("B");
+        SetObject C = SetObjectStorage.getInstance().load("C");
+
+        Relation idl = ideal(B, C, ba, 1);
+        idl.setName("ideal");
+        try {
+            RelationStorage.getInstance().save(idl.getName(), idl.toXMLString());
+
+            rho.setName("rho");
+            RelationStorage.getInstance().save(rho.getName(), rho.toXMLString());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        RelationDisplay relationDisplay = new RelationDisplay();
+        relationDisplay.setRelation(rho);
+        userInterface.addView(relationDisplay);
+//
+//        out.println(idl);
+//
+//
+//        Relation obj1 = RelationStorage.getInstance().load("rho_new");
+//        out.println(obj1.toString());
+
 //
 //        SetObject obj2 = SetObject.load("B");
 //        out.println(obj2.getName());

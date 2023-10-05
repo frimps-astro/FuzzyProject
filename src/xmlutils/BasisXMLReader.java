@@ -1,16 +1,12 @@
 package xmlutils;
 
 import exceptions.EmptyNodesException;
-import exceptions.InvalidMeetJoinMatrixLengthException;
 import main.Basis;
 import main.HeytingAlgebra;
 import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import storage.HeytingAlgebraStorage;
 
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static classutils.LoadPaths.XSDPATH;
 import static xmlutils.XMLTools.getChildNodes;
@@ -32,7 +28,7 @@ public class BasisXMLReader extends XMLReader<Basis> implements XMLNodeConverter
     @Override
     public Basis convertXMLNode(Node node) {
         List<Node> childNodes = getChildNodes(node);
-        HeytingAlgebra heytingAlgebra = HeytingAlgebra.load(getStringAttribute(childNodes.get(0),"name"));
+        HeytingAlgebra heytingAlgebra = HeytingAlgebraStorage.getInstance().load(getStringAttribute(childNodes.get(0),"name"));
         int[][] star  = star(childNodes.get(1).getTextContent().trim().strip().split("\n"));
 
         return new Basis(heytingAlgebra, star);

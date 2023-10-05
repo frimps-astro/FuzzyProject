@@ -1,8 +1,6 @@
 package main;
 
 import storage.SetObjectStorage;
-
-import java.io.IOException;
 import java.util.Arrays;
 
 public class SumSetObject extends SetObject {
@@ -43,12 +41,6 @@ public class SumSetObject extends SetObject {
         return right;
     }
 
-    @Override
-    public void save() throws IOException {
-        SetObjectStorage.getInstance().save(name, toXMLString());
-        this.left.save();
-        this.right.save();
-    }
 
     @Override
     public String toXMLString() {

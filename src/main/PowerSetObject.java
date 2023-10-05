@@ -33,10 +33,6 @@ public class PowerSetObject extends SetObject {
         this.basis = basis;
     }
 
-    public PowerSetObject(SetObject body) {
-        this.body = body;
-    }
-
     public PowerSetObject(String name, SetObject body, Basis basis) {
         this(body,basis);
         this.name = name;
@@ -51,14 +47,6 @@ public class PowerSetObject extends SetObject {
 
     public Basis getBasis() {
         return basis;
-    }
-
-    @Override
-    public void save() throws IOException {
-        SetObjectStorage.getInstance().save(name, toXMLString());
-        this.body.save();
-        this.basis.getHeytingAlgebra().save();
-        this.basis.save();
     }
 
     @Override
