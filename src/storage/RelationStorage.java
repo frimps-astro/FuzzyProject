@@ -1,9 +1,8 @@
 package storage;
 
 import exceptions.OperationExecutionException;
-import main.Relation;
+import relations.Relation;
 import main.Project;
-import main.Relationals;
 import xmlutils.RelationXMLReader;
 
 import java.io.File;
@@ -25,8 +24,8 @@ public class RelationStorage {
         return STORAGE;
     }
 
-    public Relation load(String filename){
-        if (database.containsKey(filename)){
+    public Relation load(String filename) {
+        if (database.containsKey(filename)) {
             System.out.println("loading "+ filename + " from storage");
             return this.get(filename);
         } else {

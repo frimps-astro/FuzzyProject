@@ -7,10 +7,17 @@ import static xmlutils.XMLTools.getStringAttribute;
 import exceptions.EmptyNodesException;
 import main.*;
 import org.w3c.dom.Node;
+import relations.Relation;
+import sets.SetObject;
 import storage.BasisStorage;
+import storage.RelationStorage;
 import storage.SetObjectStorage;
+import typeterm.Typeterm;
+import typeterm.TypetermParser;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class RelationXMLReader extends XMLReader<Relation> implements XMLNodeConverter<Relation> {
@@ -33,13 +40,26 @@ public class RelationXMLReader extends XMLReader<Relation> implements XMLNodeCon
 
         Basis basis = BasisStorage.getInstance().load(getStringAttribute(clist.get(0), "name"));
 
-        SetObject source = SetObjectStorage.getInstance().load(getStringAttribute(clist.get(1),"Source"));
-        SetObject target = SetObjectStorage.getInstance().load(getStringAttribute(clist.get(1),"Target"));
+        Typeterm sourceTerm = TypetermParser.getTypeParser().parse(getStringAttribute(clist.get(1),"Source"));
+        Typeterm targetTerm = TypetermParser.getTypeParser().parse(getStringAttribute(clist.get(1),"Target"));
 
-        int[][] matrix  = matrix(clist.get(2).getTextContent().trim().strip().split("\n"),
-                source.getNumElements(), target.getNumElements());
+        Map<String, SetObject> params = new HashMap<>();
+        sourceTerm.variables().forEach(var -> {
+            SetObject setObject = SetObjectStorage.getInstance().load(var);
+            params.put(setObject.getName(), setObject);
+        });
 
-        return new Relation(source, target, basis, matrix);
+        targetTerm.variables().forEach(var -> {
+            SetObject setObject = SetObjectStorage.getInstance().load(var);
+            params.put(setObject.getName(), setObject);
+        });
+
+        String[] data = clist.get(2).getTextContent().trim().strip().split("\n");
+        int s = data.length;
+        int t = data[0].split(",").length;
+        int[][] matrix  = matrix(data, s, t);
+
+        return new Relation(sourceTerm, targetTerm, params, basis, matrix);
     }
 
     private int[][] matrix(String[] data, int s, int t){

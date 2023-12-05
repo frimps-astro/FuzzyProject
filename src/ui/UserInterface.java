@@ -69,8 +69,7 @@ public class UserInterface {
 
     }
 
-    public void addView(Component component){
-        component.setSize(new Dimension(200,400));
+    public void addLeftComponent(Component component){
         jSplitPane.setLeftComponent(component);
     }
 

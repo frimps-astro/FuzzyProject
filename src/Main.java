@@ -1,56 +1,96 @@
-import java.io.IOException;
+import exceptions.TypingException;
+import relterm.Relterm;
+import relterm.ReltermParser;
+import relterm.RelVariable;
+import relterm.Converse;
+import relterm.LeftResidual;
+import relterm.Meet;
+import relterm.leaves.Epsi;
+
 import java.io.PrintStream;
-import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-
-import main.*;
-import main.SetObject;
-import storage.BasisStorage;
-import storage.RelationStorage;
-import storage.SetObjectStorage;
-import ui.RelationDisplay;
-import ui.UserInterface;
-
-import static main.Relation.*;
+import java.io.UnsupportedEncodingException;
 
 public class Main {
     public static void main(String[] args) {
-        UserInterface userInterface = UserInterface.getInstance();
-        userInterface.createUI();
+        PrintStream out;
+        try {
+            out = new PrintStream(System.out,true,"UTF-8");
+        } catch (UnsupportedEncodingException ex) {
+            out = System.out;
+        }
 
-        Project project = Project.getInstance();
-        project.setName("user");
-        project.setProject();
+        Epsi epsi = new Epsi();
+        Relterm cR = new Meet(new LeftResidual(epsi,new Converse(new RelVariable("R"))),new Converse(epsi));
+        out.println(cR);
+
+        ReltermParser reltermParser = ReltermParser.getTypeParser();
+        Relterm choiceOfR = reltermParser.parse("ε\\R˘⊓ε˘");
+
+        out.println(choiceOfR);
+
+        try {
+            cR.type();
+        } catch (TypingException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException(e);
+        }
+        out.println("RelationType of Result: "+cR.getType());
+        out.println("Typed Variables: " + cR.getTypedVars());
+
+//        VariableGenerator gen = new VariableGenerator();
+//
+//        int genCounter = 10;
+//        for (int i = 0; i < genCounter; i++) {
+//            System.out.println(new TypeVariable(gen.newVarName()));
+//        }
+
+
+//        UserInterface userInterface = UserInterface.getInstance();
+//        userInterface.createUI();
+//
+//        //SETUP USER project
+//        Project project = Project.getInstance();
+//        project.setName("user");
+//        project.setProject();
+//
+//        //LOAD and DISPLAY the RHO RELATION under the USER project
+//        Relation rho = RelationStorage.getInstance().load("rho");
+//        RelationDisplay relationDisplay = new RelationDisplay();
+//        relationDisplay.setRelation(rho);
+//        userInterface.addLeftComponent(relationDisplay);
+
+
+//        Project project = Project.getInstance();
+//        project.setName("user");
+//        project.setProject();
 //        SetObjectStorage.getInstance().createPowerSetObject("HA^B", "B", "HA");
 //        SetObjectStorage.getInstance().createSumSetObject("A+C", "A", "C");
 //        SetObjectStorage.getInstance().createProductSetObject("(AxB)xC", "AxB", "C");
 //
-        PrintStream out;
-        out = new PrintStream(System.out,true, StandardCharsets.UTF_8);
-
-        SetObject pro = SetObjectStorage.getInstance().load("AxB");
-        Basis ba = BasisStorage.getInstance().load("HA");
-        Relation rho = rho((ProductSetObject) pro, ba);
+//        PrintStream out;
+//        out = new PrintStream(System.out,true, StandardCharsets.UTF_8);
+//
+//        SetObject pro = SetObjectStorage.getInstance().load("AxB");
+//        Basis ba = BasisStorage.getInstance().load("HA");
+//        Relation rho = rho((ProductSetObject) pro, ba);
 //        out.println(rho);
 
-        SetObject A = SetObjectStorage.getInstance().load("A");
-        SetObject B = SetObjectStorage.getInstance().load("B");
-        SetObject C = SetObjectStorage.getInstance().load("C");
+//        SetObject A = SetObjectStorage.getInstance().load("A");
+//        SetObject B = SetObjectStorage.getInstance().load("B");
+//        SetObject C = SetObjectStorage.getInstance().load("C");
+//
+//        Relation idl = ideal(B, C, ba, 1);
+//        idl.setName("ideal");
+//        try {
+//            RelationStorage.getInstance().save(idl.getName(), idl.toXMLString());
+//
+//            rho.setName("rho");
+//            RelationStorage.getInstance().save(rho.getName(), rho.toXMLString());
+//        } catch (IOException e) {
+//            throw new RuntimeException(e);
+//        }
 
-        Relation idl = ideal(B, C, ba, 1);
-        idl.setName("ideal");
-        try {
-            RelationStorage.getInstance().save(idl.getName(), idl.toXMLString());
 
-            rho.setName("rho");
-            RelationStorage.getInstance().save(rho.getName(), rho.toXMLString());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        RelationDisplay relationDisplay = new RelationDisplay();
-        relationDisplay.setRelation(rho);
-        userInterface.addView(relationDisplay);
 //
 //        out.println(idl);
 //
@@ -280,5 +320,7 @@ public class Main {
         }catch (IOException ex){
             out.println(ex.getMessage());
         }*/
+//        RelTerm parse = reltermParser.parse("ε\\ε;C⊓ε˘");
+        
     }
 }

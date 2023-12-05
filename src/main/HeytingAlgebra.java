@@ -7,10 +7,10 @@ import java.util.Arrays;
 import java.util.List;
 
 public class HeytingAlgebra implements XMLObject{
-    private  int numElements;
-    private String[] elementNames;
-    private int[][] meet;
-    private int[][] join;
+    private final int numElements;
+    private final String[] elementNames;
+    private final int[][] meet;
+    private final int[][] join;
     private  int[][] impl;
     private  int bot;
     private  int top;
@@ -51,6 +51,10 @@ public class HeytingAlgebra implements XMLObject{
 
     public int getTop() {
         return top;
+    }
+
+    public int[][] getJoin() {
+        return join;
     }
 
     public HeytingAlgebra(int numElements, String[] elementNames, int[][] meet, int[][] join) {
@@ -172,7 +176,7 @@ public class HeytingAlgebra implements XMLObject{
             }
         }
     }
-    public void computeImpl(){
+    private void computeImpl(){
         impl = new int[numElements][numElements];
 
         for (int x = 0; x < numElements; x++) {

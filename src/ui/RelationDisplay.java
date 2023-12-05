@@ -1,6 +1,6 @@
 package ui;
 
-import main.Relation;
+import relations.Relation;
 
 import java.awt.Component;
 import java.awt.Dimension;

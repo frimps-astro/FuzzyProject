@@ -2,6 +2,10 @@ package storage;
 
 import exceptions.OperationExecutionException;
 import main.*;
+import sets.PowerSetObject;
+import sets.ProductSetObject;
+import sets.SetObject;
+import sets.SumSetObject;
 import xmlutils.SetObjectXMLReader;
 
 import java.io.File;

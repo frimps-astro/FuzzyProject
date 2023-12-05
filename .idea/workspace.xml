@@ -5,66 +5,51 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d246993b-c2a2-4f1d-b93f-e949f1ff56e0" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/frimps.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/user/Basis/Ba.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/user/Basis/HA.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/user/HeytingAlgebras/BooleanHA.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/user/HeytingAlgebras/H.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/user/HeytingAlgebras/heyting.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/user/SetObjects/(A+B)+A.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/user/SetObjects/(AxB)xA.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/user/SetObjects/A+B.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/user/SetObjects/A.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/user/SetObjects/AxB.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/user/SetObjects/B.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/user/SetObjects/C.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/Main.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/classutils/LoadPaths.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/exceptions/EmptyNodesException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/exceptions/InvalidMeetJoinMatrixLengthException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/exceptions/InvalidXYvalueException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/exceptions/OperationExecutionException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/exceptions/RelationException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/main/Basis.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/main/HeytingAlgebra.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/FuzzyProject.iml" beforeDir="false" afterPath="$PROJECT_DIR$/FuzzyProject.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/FuzzyProject/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/main/Basis.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/FuzzyProject/main/Basis.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/main/HeytingAlgebra.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/FuzzyProject/main/HeytingAlgebra.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/production/FuzzyProject/main/PowerSetObject.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/production/FuzzyProject/main/PrimitiveSetObject.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/production/FuzzyProject/main/ProductSetObject.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/main/Project.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/main/Project.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/FuzzyProject/main/Project.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/production/FuzzyProject/main/Relation.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/main/Relationals.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/production/FuzzyProject/main/SetObject.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/production/FuzzyProject/main/SumSetObject.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/project.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/storage/BasisStorage.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/storage/HeytingAlgebraStorage.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/storage/SetObjectStorage.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/xmlutils/BasisXMLReader.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/xmlutils/HeytingAlgebraXMLReader.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/xmlutils/SetObjectXMLReader.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/xmlutils/XMLNodeConverter.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/xmlutils/XMLObject.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/xmlutils/XMLReader.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/xmlutils/XMLTools.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/storage/RelationStorage.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/FuzzyProject/storage/RelationStorage.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/storage/SetObjectStorage.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/FuzzyProject/storage/SetObjectStorage.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/ui/RelationDisplay$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/FuzzyProject/ui/RelationDisplay$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/ui/RelationDisplay$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/FuzzyProject/ui/RelationDisplay$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/ui/RelationDisplay$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/FuzzyProject/ui/RelationDisplay$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/ui/RelationDisplay$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/FuzzyProject/ui/RelationDisplay$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/ui/RelationDisplay$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/FuzzyProject/ui/RelationDisplay$5.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/ui/RelationDisplay.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/FuzzyProject/ui/RelationDisplay.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/ui/UserInterface$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/FuzzyProject/ui/UserInterface$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/ui/UserInterface$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/FuzzyProject/ui/UserInterface$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/ui/UserInterface$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/FuzzyProject/ui/UserInterface$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/ui/UserInterface$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/FuzzyProject/ui/UserInterface$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/ui/UserInterface$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/FuzzyProject/ui/UserInterface$5.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/ui/UserInterface$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/FuzzyProject/ui/UserInterface$6.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/ui/UserInterface.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/FuzzyProject/ui/UserInterface.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/xmlutils/RelationXMLReader.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/FuzzyProject/xmlutils/RelationXMLReader.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/production/FuzzyProject/xmlutils/SetObjectXMLReader.class" beforeDir="false" afterPath="$PROJECT_DIR$/production/FuzzyProject/xmlutils/SetObjectXMLReader.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/classutils/LoadPaths.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/classutils/LoadPaths.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/Basis.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Basis.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/HeytingAlgebra.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/HeytingAlgebra.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/PowerSetObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/PowerSetObject.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/PrimitiveSetObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/PrimitiveSetObject.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/ProductSetObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/ProductSetObject.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Project.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Project.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Relation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Relation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/SetObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/SetObject.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/SumSetObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/SumSetObject.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/storage/BasisStorage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/storage/BasisStorage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/storage/HeytingAlgebraStorage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/storage/HeytingAlgebraStorage.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/PowerSetObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sets/PowerSetObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/PrimitiveSetObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sets/PrimitiveSetObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/ProductSetObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sets/ProductSetObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Relation.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Relationals.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/relations/Relationals.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/SetObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sets/SetObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/SumSetObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/sets/SumSetObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/storage/RelationStorage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/storage/RelationStorage.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/storage/SetObjectStorage.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/storage/SetObjectStorage.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/xmlutils/BasisXMLReader.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ui/RelationDisplay.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/RelationDisplay.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ui/UserInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ui/UserInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/xmlutils/RelationXMLReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/xmlutils/RelationXMLReader.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/xmlutils/SetObjectXMLReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/xmlutils/SetObjectXMLReader.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -110,9 +95,9 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;jdk.selected.JAVA_MODULE&quot;: &quot;openjdk-20&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/frimps/Documents/BROCK/SPRING/FuzzyProject/src/test/data&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/frimps/Documents/BROCK/SPRING/FuzzyProject/src/exceptions&quot;,
     &quot;onboarding.tips.debug.path&quot;: &quot;/Users/frimps/Documents/BROCK/SPRING/FuzzyProject/FuzzyProjectNew/src/Main.java&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15234375&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;Errors&quot;
@@ -123,15 +108,18 @@
       <recent name="" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/exceptions" />
+      <recent name="$PROJECT_DIR$/src/typeterm" />
+      <recent name="$PROJECT_DIR$/src/relterm" />
+      <recent name="$PROJECT_DIR$/src/typeterm/composites" />
       <recent name="$PROJECT_DIR$/src/test/data" />
-      <recent name="$PROJECT_DIR$/src/test/data/syq" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/relterm" />
       <recent name="$PROJECT_DIR$/data/user" />
       <recent name="$PROJECT_DIR$/src/ui" />
       <recent name="$PROJECT_DIR$/src/data" />
       <recent name="$PROJECT_DIR$/src/test/data/bounds" />
-      <recent name="$PROJECT_DIR$/src/test/data/composition" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="xmlutils" />
@@ -237,6 +225,16 @@
       <updated>1683741048565</updated>
     </task>
     <servers />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.StackOverflowError" package="java.lang" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -5,7 +5,7 @@ import java.util.List;
 
 import main.*;
 import org.w3c.dom.Node;
-import main.SetObject;
+import sets.*;
 import storage.BasisStorage;
 import storage.SetObjectStorage;
 
