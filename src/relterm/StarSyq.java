@@ -2,7 +2,10 @@ package relterm;
 
 import exceptions.TypingException;
 import exceptions.UnificationException;
+import main.Basis;
 import main.VariableGenerator;
+import relations.Relation;
+import sets.SetObject;
 import typeterm.RelationType;
 import typeterm.Typeterm;
 
@@ -50,5 +53,16 @@ public class StarSyq extends Relterm {
     @Override
     public String toStringPrec(int prec) {
         return "syQ*(%s,%s)".formatted(left.toStringPrec(0), right.toStringPrec(0));
+    }
+
+    @Override
+    public Relation execute(Map<String, Relation> rels, Map<String, SetObject> sets, Basis basis) {
+        return left.execute(rels, sets, basis).starSyq(right.execute(rels, sets, basis));
+    }
+
+    @Override
+    public void substituteInType(Map<String, Typeterm> subst) {
+        left.substituteInType(subst);
+        right.substituteInType(subst);
     }
 }

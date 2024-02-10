@@ -26,11 +26,12 @@ public class TypetermParser {
     private TypetermParser() {
     }
 
-    public Parser<Typeterm> getParser() {
+    public Parser<Typeterm> getParser(Terminals operators) {
         Parser.Reference<Typeterm> ref = newReference();
         Parser<Typeterm> term =
                 ref.lazy().between(operators.token("("), operators.token(")"))
-                        .or(Parsers.sequence(operators.token("P"),ref.lazy().between(operators.token("("), operators.token(")")),(t,p) -> new Power(p)))
+                        .or(Parsers.sequence(operators.token("P"),ref.lazy().between(operators.token("("),
+                                operators.token(")")),(t,p) -> new Power(p)))
                         .or(Terminals.Identifier.PARSER.map(TypeVariable::new));
         Parser<Typeterm> parser = new OperatorTable<Typeterm>()
                 .infixr(operators.token("*").retn(Product::new), 20)
@@ -41,7 +42,7 @@ public class TypetermParser {
     }
 
     public Typeterm parse(CharSequence source) {
-        return getParser()
+        return getParser(operators)
                 .from(operators.tokenizer().cast().or(Terminals.Identifier.TOKENIZER),Scanners.WHITESPACES.skipMany())
                 .parse(source);
     }

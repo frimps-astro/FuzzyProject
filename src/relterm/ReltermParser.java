@@ -5,6 +5,9 @@ import org.jparsec.Parser;
 import org.jparsec.Scanners;
 import org.jparsec.Terminals;
 import relterm.leaves.*;
+import typeterm.Typeterm;
+
+import java.util.Map;
 
 import static org.jparsec.Parser.newReference;
 
@@ -28,7 +31,7 @@ public class ReltermParser {
     private ReltermParser() {
     }
 
-    public Parser<Relterm> getParser() {
+    public Parser<Relterm> getParser(Terminals operators) {
         Parser.Reference<Relterm> ref = newReference();
         Parser<Relterm> term =
                 ref.lazy().between(operators.token("("), operators.token(")"))
@@ -65,7 +68,7 @@ public class ReltermParser {
     }
 
     public Relterm parse(CharSequence source) {
-        return getParser()
+        return getParser(operators)
                 .from(operators.tokenizer().cast().or(Terminals.Identifier.TOKENIZER),Scanners.WHITESPACES.skipMany())
                 .parse(source);
     }

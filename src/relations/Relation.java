@@ -104,7 +104,7 @@ public class Relation extends Relationals{
         }
     }
     
-    public static Relation identity(Typeterm setObjectTerm, Map<String, SetObject> params, Basis basis, int n) {
+    public static Relation identity(Typeterm setObjectTerm, Map<String, SetObject> params, Basis basis) {
         Relation result = null;
         try {
             Map<String,SetObject> newParams = new HashMap<>();
@@ -115,9 +115,7 @@ public class Relation extends Relationals{
         return result;
     }
 
-    public static Relation pi(Product productSetObjectTerm, Map<String, SetObject> params, Basis basis){
-        Typeterm leftTerm = productSetObjectTerm.getLeft();
-        Typeterm rightTerm = productSetObjectTerm.getRight();
+    public static Relation pi(Typeterm leftTerm, Typeterm rightTerm, Map<String, SetObject> params, Basis basis){
         SetObject left = leftTerm.execute(params,basis);
         SetObject right = rightTerm.execute(params,basis);
         int bot = basis.getBot();
@@ -132,16 +130,10 @@ public class Relation extends Relationals{
             }
         }
 
-        Map<String,SetObject> newParams = new HashMap<>();
-        productSetObjectTerm.variables().forEach(var -> newParams.put(var, params.get(var)));
-        leftTerm.variables().forEach(var -> newParams.put(var, params.get(var)));
-
-        return new Relation(productSetObjectTerm, leftTerm, new ProductSetObject(left,right), left, newParams, basis, matrix);
+        return new Relation(new Product(leftTerm, rightTerm), leftTerm, new ProductSetObject(left, right), left, params, basis, matrix);
     }
 
-    public static Relation rho(Product productSetObjectTerm, Map<String, SetObject> params, Basis basis){
-        Typeterm leftTerm = productSetObjectTerm.getLeft();
-        Typeterm rightTerm = productSetObjectTerm.getRight();
+    public static Relation rho(Typeterm leftTerm, Typeterm rightTerm, Map<String, SetObject> params, Basis basis){
         SetObject left = leftTerm.execute(params,basis);
         SetObject right = rightTerm.execute(params,basis);
         int bot = basis.getBot();
@@ -155,18 +147,14 @@ public class Relation extends Relationals{
                 matrix[i][j] = i % rels == j ? top : bot;
             }
         }
-        Map<String,SetObject> newParams = new HashMap<>();
-        productSetObjectTerm.variables().forEach(var -> newParams.put(var, params.get(var)));
-        rightTerm.variables().forEach(var -> newParams.put(var, params.get(var)));
 
-        return new Relation(productSetObjectTerm, rightTerm, new ProductSetObject(left,right), right, newParams, basis, matrix);
+        return new Relation(new Product(leftTerm, rightTerm), rightTerm, new ProductSetObject(left,right), right, params, basis, matrix);
     }
 
-    public static Relation iota(Sum sumSetObjectTerm, Map<String, SetObject> params, Basis basis){
-        Typeterm leftTerm = sumSetObjectTerm.getLeft();
-        Typeterm rightTerm = sumSetObjectTerm.getRight();
+    public static Relation iota(Typeterm leftTerm, Typeterm rightTerm, Map<String, SetObject> params, Basis basis){
         SetObject left = leftTerm.execute(params,basis);
         SetObject right = rightTerm.execute(params,basis);
+        SumSetObject sumSetObject = new SumSetObject(left,right);
         int bot = basis.getBot();
         int top = basis.getTop();
         int lels = left.getNumElements();
@@ -179,18 +167,13 @@ public class Relation extends Relationals{
             }
         }
 
-        Map<String,SetObject> newParams = new HashMap<>();
-        leftTerm.variables().forEach(var -> newParams.put(var, params.get(var)));
-        sumSetObjectTerm.variables().forEach(var -> newParams.put(var, params.get(var)));
-
-        return new Relation(leftTerm, sumSetObjectTerm, left, new SumSetObject(left,right), newParams, basis, matrix);
+        return new Relation(leftTerm, new Sum(leftTerm, rightTerm), left, sumSetObject, params, basis, matrix);
     }
 
-    public static Relation kappa(Sum sumSetObjectTerm, Map<String, SetObject> params, Basis basis){
-        Typeterm leftTerm = sumSetObjectTerm.getLeft();
-        Typeterm rightTerm = sumSetObjectTerm.getRight();
+    public static Relation kappa(Typeterm leftTerm, Typeterm rightTerm, Map<String, SetObject> params, Basis basis){
         SetObject left = leftTerm.execute(params,basis);
         SetObject right = rightTerm.execute(params,basis);
+        SumSetObject sumSetObject = new SumSetObject(left, right);
         int bot = basis.getBot();
         int top = basis.getTop();
         int lels = left.getNumElements();
@@ -203,15 +186,10 @@ public class Relation extends Relationals{
             }
         }
 
-        Map<String,SetObject> newParams = new HashMap<>();
-        rightTerm.variables().forEach(var -> newParams.put(var, params.get(var)));
-        sumSetObjectTerm.variables().forEach(var -> newParams.put(var, params.get(var)));
-
-        return new Relation(rightTerm, sumSetObjectTerm, right, new SumSetObject(left,right), newParams, basis, matrix);
+        return new Relation(rightTerm, new Sum(leftTerm, rightTerm), right, sumSetObject, params, basis, matrix);
     }
 
-    public static Relation epsi(Power powerSetObjectTerm, Map<String, SetObject> params, Basis basis){
-        Typeterm bodyTerm = powerSetObjectTerm.getBody();
+    public static Relation epsi(Typeterm bodyTerm, Map<String, SetObject> params, Basis basis){
         SetObject body = bodyTerm.execute(params, basis);
         SetObject powerSetObject = new PowerSetObject(body,basis);
         int source = body.getNumElements();
@@ -228,12 +206,7 @@ public class Relation extends Relationals{
                 matrix[i][j] = Arrays.stream(basis.getElementNames()).toList().indexOf(degreeElement);
             }
         }
-
-        Map<String,SetObject> newParams = new HashMap<>();
-        bodyTerm.variables().forEach(var -> newParams.put(var, params.get(var)));
-        powerSetObjectTerm.variables().forEach(var -> newParams.put(var, params.get(var)));
-
-        return new Relation(bodyTerm, powerSetObjectTerm, body, powerSetObject, newParams, basis, matrix);
+        return new Relation(bodyTerm, new Power(bodyTerm), body, powerSetObject, params, basis, matrix);
     }
     
     public int[][] getMatrix() {
@@ -519,5 +492,13 @@ public class Relation extends Relationals{
 
     public Typeterm getTargetTerm() {
         return targetTerm;
+    }
+
+    public Basis getTruth() {
+        return truth;
+    }
+
+    public Map<String, SetObject> getParams() {
+        return params;
     }
 }

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+    <xs:element name="Relation">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Basis" minOccurs="1" maxOccurs="1">
+                    <xs:complexType>
+                        <xs:attribute name="name" type="xs:string"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="SetObject" minOccurs="1" maxOccurs="1">
+                    <xs:complexType>
+                        <xs:attribute name="Source" type="xs:string"/>
+                        <xs:attribute name="Target" type="xs:string"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="Matrix" minOccurs="1" maxOccurs="1"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

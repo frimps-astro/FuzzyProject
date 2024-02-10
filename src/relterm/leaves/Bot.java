@@ -1,14 +1,19 @@
 package relterm.leaves;
 
 import exceptions.TypingException;
+import main.Basis;
 import main.VariableGenerator;
+import relations.Relation;
 import relterm.Relterm;
+import sets.SetObject;
 import typeterm.RelationType;
 import typeterm.TypeVariable;
+import typeterm.Typeterm;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 public class Bot extends Relterm {
     private RelationType type;
@@ -35,5 +40,15 @@ public class Bot extends Relterm {
     @Override
     public String toStringPrec(int prec){
         return "\u2aeb";
+    }
+
+    @Override
+    public Relation execute(Map<String, Relation> rels, Map<String, SetObject> sets, Basis basis) {
+        return Relation.bot(type.source, type.target, sets, basis);
+    }
+
+    @Override
+    public void substituteInType(Map<String, Typeterm> subst) {
+        type.substitute(subst);
     }
 }

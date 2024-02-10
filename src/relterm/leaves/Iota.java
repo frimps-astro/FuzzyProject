@@ -1,11 +1,15 @@
 package relterm.leaves;
 
 import exceptions.TypingException;
+import main.Basis;
 import main.VariableGenerator;
+import relations.Relation;
 import relterm.Relterm;
+import sets.SetObject;
 import typeterm.RelationType;
 import typeterm.TypeVariable;
 import typeterm.Sum;
+import typeterm.Typeterm;
 
 import java.util.HashMap;
 import java.util.List;
@@ -36,5 +40,15 @@ public class Iota extends Relterm {
     @Override
     public String toStringPrec(int prec) {
         return "\u0399";
+    }
+
+    @Override
+    public Relation execute(Map<String, Relation> rels, Map<String, SetObject> sets, Basis basis) {
+        return Relation.iota(((Sum)type.target).getLeft(), ((Sum)type.target).getRight(), sets, basis);
+    }
+
+    @Override
+    public void substituteInType(Map<String, Typeterm> subst) {
+        type.substitute(subst);
     }
 }

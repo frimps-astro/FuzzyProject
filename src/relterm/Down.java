@@ -2,7 +2,10 @@ package relterm;
 
 import exceptions.TypingException;
 import exceptions.UnificationException;
+import main.Basis;
 import main.VariableGenerator;
+import relations.Relation;
+import sets.SetObject;
 import typeterm.RelationType;
 import typeterm.Typeterm;
 
@@ -36,5 +39,15 @@ public class Down extends Relterm {
     public String toStringPrec(int prec) {
         String result = leaf.toStringPrec(precedence) + "\ua71c";
         return result;
+    }
+
+    @Override
+    public Relation execute(Map<String, Relation> rels, Map<String, SetObject> sets, Basis basis) {
+        return leaf.execute(rels, sets, basis).down();
+    }
+
+    @Override
+    public void substituteInType(Map<String, Typeterm> subst) {
+        leaf.substituteInType(subst);
     }
 }

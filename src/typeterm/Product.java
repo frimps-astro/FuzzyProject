@@ -9,8 +9,6 @@ import java.util.Map;
 import java.util.Set;
 
 public class Product extends Typeterm {
-
-
     private final Typeterm left;
     private final Typeterm right;
     private static final int precedence = 20;

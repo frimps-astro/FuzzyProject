@@ -1,7 +1,10 @@
 package relterm;
 
 import exceptions.TypingException;
+import main.Basis;
 import main.VariableGenerator;
+import relations.Relation;
+import sets.SetObject;
 import typeterm.RelationType;
 import typeterm.Typeterm;
 
@@ -25,6 +28,10 @@ public abstract class Relterm {
     public abstract Map<String,RelationType> getTypedVars();
 
     public abstract String toStringPrec(int prec);
+
+    public abstract Relation execute(Map<String, Relation> rels, Map<String, SetObject> sets, Basis basis);
+
+    public abstract void substituteInType(Map<String, Typeterm> subst);
 
     @Override
     public String toString(){
