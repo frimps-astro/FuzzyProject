@@ -1,8 +1,8 @@
 package ui;
 
 import main.Project;
-import ui.utils.UIConstants;
 import ui.utils.UIDialogs;
+import ui.utils.UIMethods;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,12 +10,13 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 
 import static classutils.LoadPaths.DATAPATH;
+import static ui.utils.UIConstants.*;
 
 
 public class UserInterface extends JFrame{
     private static UserInterface USERINTERFACE = null;
     private Project project;
-    JButton loadProjectBtn, declarationBtn, addProjectBtn;
+    JButton loadProjectBtn, addProjectBtn;
     JComboBox<String> projectsList;
 //    JFrame frame;
     public static UserInterface getInstance() {
@@ -23,22 +24,19 @@ public class UserInterface extends JFrame{
         return USERINTERFACE;
     }
 
-    public void createUI(){
-//        frame = new JFrame("Social Choice Theory");
+    public UserInterface(){
         setTitle("Social Choice Theory");
         setSize(400, 400);
         setLocationRelativeTo(null);
 
         loadProjectBtn = new JButton("Load Project");
-        declarationBtn = new JButton("Declaration");
+        loadProjectBtn.setBounds(200, 20, 150, BUTTONHEIGHT);
+        loadProjectBtn.addActionListener(this::loadProjectAction);
 
-        projectsList = new JComboBox<>(readProjectLists());
+        projectsList = new JComboBox<>(UIMethods.getInstance().readDataList(DATAPATH));
         projectsList.insertItemAt("--choose project--", 0);
         projectsList.setSelectedIndex(0);
-
         projectsList.setBounds(20, 20, 180,40);
-        loadProjectBtn.setBounds(200, 20, 150, UIConstants.BUTTONHEIGHT);
-        loadProjectBtn.addActionListener(this::loadProjectAction);
 
         add(projectsList);
         add(loadProjectBtn);
@@ -49,32 +47,32 @@ public class UserInterface extends JFrame{
         setVisible(true);
         setResizable(false);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        addWindowListener(UIMethods.getInstance().windowEvent());
     }
 
     private void loadProjectAction(ActionEvent e){
-        if (projectsList.getSelectedIndex() != 0) {
-            UIConstants.PROJECTNAME = projectsList.getSelectedItem().toString();
+        JFrame ui = INTERFACES.get("ProjectUI");
+       if(ui == null) {
+            if (projectsList.getSelectedIndex() != 0) {
+                PROJECTNAME = projectsList.getSelectedItem().toString();
 
-            project = Project.getInstance();
-            project.setName(UIConstants.PROJECTNAME);
-            project.setProject();
+                project = Project.getInstance();
+                project.setName(PROJECTNAME);
+                project.setProject();
 
-            JDialog dialog = new JDialog(new ProjectUI());
+                new Dialog(new ProjectUI());
+            } else {
+                UIDialogs.getInstance().notifyDialog("Please select a project to load", getBounds());
+            }
         } else {
-            UIDialogs.getInstance().notifyDialog("Please select a project to load", getBounds());
-        }
-    }
-
-    private String[] readProjectLists(){
-        File file = new File(DATAPATH);
-        String[] projects = file.list((current, name) -> new File(current, name).isDirectory());
-
-        return projects;
+           ui.toFront();
+           ui.repaint();
+       }
     }
 
     private JComponent newProject(){
         addProjectBtn = new JButton("New Project");
-        addProjectBtn.setBounds(getSize().width/3, 100, 150,UIConstants.BUTTONHEIGHT);
+        addProjectBtn.setBounds(getSize().width/3, 100, 150,BUTTONHEIGHT);
 
         addProjectBtn.addActionListener( e ->
                 createProjectDialog().setVisible(true));
@@ -104,9 +102,10 @@ public class UserInterface extends JFrame{
     }
 
     private JDialog createProjectDialog(){
-        final JDialog modelDialog = new JDialog(new Frame(), "Add New Project",
+        final JDialog modelDialog = new JDialog(this, "Add New Project",
                 Dialog.ModalityType.DOCUMENT_MODAL);
-        modelDialog.setBounds(getBounds().x+50, getBounds().y+120, 300, 200);
+        modelDialog.setSize(300, 200);
+        modelDialog.setLocationRelativeTo(null);
         Container dialogContainer = modelDialog.getContentPane();
         dialogContainer.setLayout(new BorderLayout());
 
@@ -119,7 +118,7 @@ public class UserInterface extends JFrame{
 
         JLabel projectNameLabel = new JLabel("Project Name:");
         JButton createBtn = new JButton("Create");
-        createBtn.setSize(UIConstants.BUTTONWIDTH, UIConstants.BUTTONHEIGHT);
+        createBtn.setSize(BUTTONWIDTH, BUTTONHEIGHT);
         createBtn.addActionListener(e -> {
                 createNewProject(projectNameField.getText());
                 modelDialog.setVisible(false);
@@ -144,10 +143,10 @@ public class UserInterface extends JFrame{
     }
 
     private JComponent footer() {
-        String details = "Student: "+UIConstants.STUDENT+" || Supervisor: "+UIConstants.SUPERVISOR;
+        String details = "Student: "+STUDENT+" || Supervisor: "+SUPERVISOR;
         JLabel footL = new JLabel(details, SwingConstants.CENTER);
         footL.setFont(new Font("", Font.ITALIC, 12));
-        footL.setBounds(0, getHeight()-55, getWidth(),UIConstants.BUTTONHEIGHT);
+        footL.setBounds(0, getHeight()-55, getWidth(),BUTTONHEIGHT);
         return footL;
     }
 }

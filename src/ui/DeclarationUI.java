@@ -2,14 +2,17 @@ package ui;
 
 
 import storage.RelationStorage;
+import ui.utils.UIMethods;
 
 import javax.swing.*;
 import java.awt.event.*;
-import java.util.Arrays;
+
+import static ui.utils.UIConstants.BUTTONHEIGHT;
+import static ui.utils.UIConstants.BUTTONWIDTH;
 
 public class DeclarationUI extends JFrame {
     JTextField decI, varCountI;
-    JLabel decl, varCountL;
+    JLabel decl, varCountL, varL;
     JButton executeB, loadVarsB;
     int xaxis = 50, yaxis = 50, height = 30;
 
@@ -17,8 +20,10 @@ public class DeclarationUI extends JFrame {
         createComponents();
 
         setSize(600, 500);
+        setLocationRelativeTo(null);
         setLayout(null);
         setVisible(true);
+        addWindowListener(UIMethods.getInstance().windowEvent());
     }
 
     private void createComponents() {
@@ -29,11 +34,14 @@ public class DeclarationUI extends JFrame {
         decI.setBounds(xaxis * 3, 50, 350, height);
 
 
+        varL = new JLabel("Relation:");
+        varL.setBounds(xaxis, yaxis * 2, 120, height);
+
         JComboBox<String> relsBox = new JComboBox<String>(RelationStorage.getInstance().getEntityNames());
-        relsBox.setBounds(xaxis, yaxis * 2, 120, height);
-//        varCountL = new JLabel("No. of Vars:");
-//        varCountL.setBounds(xaxis, yaxis * 2, 120, height);
-//
+        relsBox.insertItemAt("--select relation--", 0);
+        relsBox.setSelectedIndex(0);
+        relsBox.setBounds(xaxis * 3, yaxis * 2, 200, height);
+
 //        varCountI = new JTextField();
 //        varCountI.setBounds(xaxis * 3, yaxis * 2, 50, height);
 //
@@ -42,24 +50,21 @@ public class DeclarationUI extends JFrame {
 //        loadVarsB.addActionListener(this::loadVarsButtonAction);
 
         executeB = new JButton("Execute");
-        executeB.setBounds(280, 250, 95, height);
+        executeB.setBounds(xaxis * 3, yaxis*3, BUTTONWIDTH, BUTTONHEIGHT);
         executeB.addActionListener(this::executeButtonAction);
         add(decI);
         add(decl);
-        add(varCountL);
-        add(varCountI);
+        add(varL);
+//        add(varCountI);
         add(relsBox);
 
         add(executeB);
-        add(loadVarsB );
+//        add(loadVarsB );
     }
 
     public void executeButtonAction(ActionEvent e) {
         try {
-            String host = decI.getText();
-            String ip = java.net.InetAddress.getByName(host).getHostAddress();
-            decl.setText("IP of " + host + " is: " + ip);
-            add(decl);
+            String dec = decI.getText();
         } catch (Exception ex) {
             System.out.println(ex);
         }

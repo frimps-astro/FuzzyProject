@@ -6,14 +6,10 @@ import main.Basis;
 import main.VariableGenerator;
 import relations.Relation;
 import sets.SetObject;
-import sets.SumSetObject;
-import sets.Unit;
 import typeterm.RelationType;
 import typeterm.Typeterm;
 import typeterm.UnitTerm;
-
 import java.util.*;
-import java.util.stream.Stream;
 
 public class Declaration {
     String name;

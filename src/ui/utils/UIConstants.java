@@ -1,6 +1,8 @@
 package ui.utils;
 
+import javax.swing.*;
 import java.awt.*;
+import java.util.*;
 
 public class UIConstants {
     public static Dimension SCREENSIZE = Toolkit.getDefaultToolkit().getScreenSize();
@@ -17,6 +19,8 @@ public class UIConstants {
     public static String STUDENT = "Clement Frimpong Osei";
     public static String SUPERVISOR = "Michael Winter";
     public static String SCHOOL = "Brock University";
+
+    public static HashMap<String, JFrame> INTERFACES = new HashMap<>();
 
 
 }

@@ -55,7 +55,6 @@ public class Main_ {
 
 
         UserInterface userInterface = UserInterface.getInstance();
-        userInterface.createUI();
 
 //        SETUP USER project
         Project project = Project.getInstance();

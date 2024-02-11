@@ -45,7 +45,8 @@ public class UIDialogs {
     public JDialog createSetObjectDialog(JFrame frame){
         final JDialog modelDialog = new JDialog(frame, "New SetObject",
                 Dialog.ModalityType.DOCUMENT_MODAL);
-        modelDialog.setBounds(frame.getWidth()/3, frame.getHeight()/3, 300, 300);
+        modelDialog.setSize(300, 300);
+        modelDialog.setLocationRelativeTo(null);
         Container dialogContainer = modelDialog.getContentPane();
         dialogContainer.setLayout(new BorderLayout());
 
