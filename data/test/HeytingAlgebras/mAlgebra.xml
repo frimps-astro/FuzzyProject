@@ -1,0 +1,17 @@
+<HeytingAlgebra size="4">
+    <Elements>
+        0,a,b,1
+    </Elements>
+    <Meet>
+        0,0,0,0,
+        0,a,a,a,
+        0,a,b,b,
+        0,a,b,1
+    </Meet>
+    <Join>
+        0,a,b,1,
+        a,a,b,1,
+        b,b,b,1,
+        1,1,1,1
+    </Join>
+</HeytingAlgebra>

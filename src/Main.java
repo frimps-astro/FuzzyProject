@@ -1,10 +1,13 @@
 import ui.UserInterface;
-import static ui.utils.UIConstants.INTERFACES;
-
-import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
+//        String dec = "Choice (R:A->A, T:B->B) : 𝓟(A) -> A = ε\\R˘⊓ε˘";
+//        Declaration declaration = DeclarationParser.getTypeParser().parse(dec);
+//        System.out.println(declaration);
+//        Project project = new Project();
+//        project.setName("user");
+//        project.setProject();
         UserInterface userInterface = UserInterface.getInstance();
     }
 }

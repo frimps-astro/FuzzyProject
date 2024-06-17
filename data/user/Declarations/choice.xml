@@ -1,0 +1,3 @@
+<Declaration>
+    Choice (R:A->A) : 𝓟(A) -> A = ε\R˘⊓ε˘
+</Declaration>

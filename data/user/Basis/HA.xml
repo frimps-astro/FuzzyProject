@@ -1,7 +1,13 @@
 <Basis>
-	<HeytingAlgebra name="BooleanHA"/>
+	<HeytingAlgebra name="H"/>
 	<Star>
-		0,0,
-		0,0
+		0,0,0,
+		0,0,0,
+		0,0,0
 	</Star>
+	<Plus>
+		0,0,0,
+		0,0,0,
+		0,0,0,
+	</Plus>
 </Basis>

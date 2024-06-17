@@ -13,11 +13,11 @@ import typeterm.Typeterm;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.BiFunction;
 
-public class Relation extends Relationals{
-
+public class Relation extends Relationals {
     private final SetObject source;
     private final SetObject target;
     private final Basis truth;
@@ -191,19 +191,22 @@ public class Relation extends Relationals{
 
     public static Relation epsi(Typeterm bodyTerm, Map<String, SetObject> params, Basis basis){
         SetObject body = bodyTerm.execute(params, basis);
-        SetObject powerSetObject = new PowerSetObject(body,basis);
+        SetObject powerSetObject = new PowerSetObject(body);
         int source = body.getNumElements();
         int target = powerSetObject.getNumElements();
+        List<String> bodyEles = List.of(body.getElementNames());
+        List<String> powerEles = List.of(powerSetObject.getElementNames());
         int[][] matrix = new int[source][target];
         for (int i = 0; i<source; i++) {
             for (int j = 0; j< target; j++) {
-                //get set at j and subset at i, then degree element at 1
-                String degreeElement = powerSetObject.getElementNames()[j] //get set a j
-                        .replaceAll("[{}]", "") //replace {}
-                        .split(",")[i] //get subset at i
-                        .split("\\|")[1]; // get degree element at 1
-
-                matrix[i][j] = Arrays.stream(basis.getElementNames()).toList().indexOf(degreeElement);
+                List<String> data = List.of(powerEles.get(j)
+                        .replaceAll("[{}]", "").replace(" ","")
+                        .split(","));
+                if (data.contains(bodyEles.get(i))){
+                    matrix[i][j] = basis.getTop();
+                } else {
+                    matrix[i][j] = basis.getBot();
+                }
             }
         }
         return new Relation(bodyTerm, new Power(bodyTerm), body, powerSetObject, params, basis, matrix);
@@ -212,7 +215,8 @@ public class Relation extends Relationals{
     public int[][] getMatrix() {
         return matrix;
     }
-    
+
+
     public Relation converse() {
         int[][] transMatrix = new int[target.getNumElements()][source.getNumElements()];
         for (int i = 0; i < source.getNumElements(); i++) {
@@ -274,8 +278,15 @@ public class Relation extends Relationals{
     public Relation star(Relation r){
         return applyBinary(r, truth::getStar);
     }
+
+    public Relation plus(Relation r){
+        return applyBinary(r, truth::getPlus);
+    }
     public Relation starImpl(Relation r){
         return applyBinary(r, truth::getStarImpl);
+    }
+    public Relation minus(Relation r){
+        return applyBinary(r, truth::getMinus);
     }
 
     public Relation starLeftResidual(Relation r) {
@@ -330,23 +341,18 @@ public class Relation extends Relationals{
     }
 
     private Relation applyBinary(Relation r, BiFunction<Integer, Integer, Integer> operation) {
-        if (this.source == r.source && this.target == r.target) {
-            int sourceEl = this.source.getNumElements();
-            int targetEl = this.target.getNumElements();
-            int[][] matrix_ = new int[sourceEl][targetEl];
-            for (int i=0; i< sourceEl; i++) {
-                for (int j=0; j < targetEl; j++) {
-                    matrix_[i][j] = operation.apply(this.matrix[i][j], r.matrix[i][j]);
-                }
+        int sourceEl = this.source.getNumElements();
+        int targetEl = this.target.getNumElements();
+        int[][] matrix_ = new int[sourceEl][targetEl];
+        for (int i=0; i< sourceEl; i++) {
+            for (int j=0; j < targetEl; j++) {
+                matrix_[i][j] = operation.apply(this.matrix[i][j], r.matrix[i][j]);
             }
-            Map<String,SetObject> newParams = new HashMap<>();
-            sourceTerm.variables().forEach(var -> newParams.put(var, params.get(var)));
-            r.targetTerm.variables().forEach(var -> newParams.put(var, r.params.get(var)));
-
-            return new Relation(sourceTerm, targetTerm, source, target, newParams, truth, matrix_ );
-        } else {
-            throw new OperationExecutionException("Relations target and source objects are must be the same");
         }
+        Map<String,SetObject> newParams = new HashMap<>();
+        sourceTerm.variables().forEach(var -> newParams.put(var, params.get(var)));
+        r.targetTerm.variables().forEach(var -> newParams.put(var, r.params.get(var)));
+        return new Relation(sourceTerm, targetTerm, source, target, newParams, truth, matrix_ );
     }
 
     private Relation multiply(Relation r, boolean row1, boolean row2, BiFunction<Integer, Integer, Integer> operation, BiFunction<Integer, Integer, Integer> aggregate) {
@@ -367,21 +373,13 @@ public class Relation extends Relationals{
                 rangeObject = this.target;
                 accessThis = (i,j) -> this.matrix[i][j];
                 if (row2) {
-                    if (this.target==r.target) {
                         accessR = (i,j) -> r.matrix[i][j];
                         resultTarget = r.source;
                         resultTargetTerm = r.sourceTerm;
-                    } else {
-                        throw new OperationExecutionException("Relations Target objects must be the same");
-                    }
                 } else {
-                    if (this.target==r.source) {
                         accessR = (i,j) -> r.matrix[j][i];
                         resultTarget = r.target;
                         resultTargetTerm = r.targetTerm;
-                    } else {
-                        throw new OperationExecutionException("Relations Target and Source objects must be the same");
-                    }
                 }
             } else {
                 resultSource = this.target;
@@ -389,21 +387,13 @@ public class Relation extends Relationals{
                 rangeObject = this.source;
                 accessThis = (i,j) -> this.matrix[j][i];
                 if (row2) {
-                    if (this.source==r.target) {
                         accessR = (i,j) -> r.matrix[i][j];
                         resultTarget = r.source;
                         resultTargetTerm = r.sourceTerm;
-                    } else {
-                        throw new OperationExecutionException("Relations Source and Target objects must be the same");
-                    }
                 } else {
-                    if (this.source==r.source) {
                         accessR = (i,j) -> r.matrix[j][i];
                         resultTarget = r.target;
                         resultTargetTerm = r.targetTerm;
-                    } else {
-                        throw new OperationExecutionException("Relations source objects must be the same");
-                    }
                 }
             }
         } else {
@@ -432,6 +422,31 @@ public class Relation extends Relationals{
         return new Relation(resultSourceTerm, resultTargetTerm, resultSource,resultTarget,resultParams,resultBasis,resultMatrix);
     }
 
+
+    public SetObject getDom() {
+        return source;
+    }
+    public SetObject getCod() {
+        return target;
+    }
+    public Basis getAlgebra() {
+        return truth;
+    }
+    public Typeterm getSourceTerm() {
+        return sourceTerm;
+    }
+
+    public Typeterm getTargetTerm() {
+        return targetTerm;
+    }
+
+    public Basis getTruth() {
+        return truth;
+    }
+
+    public Map<String, SetObject> getParams() {
+        return params;
+    }
     @Override
     public String toString() {
         StringBuilder matrixStr = new StringBuilder();
@@ -463,9 +478,9 @@ public class Relation extends Relationals{
             relationXML.append(truth.getName().replace("out","")); //remove out keyword
 
             relationXML.append("\"/>\n\t<SetObject Source=\"");
-            relationXML.append(source.getName().replace("out","")); //remove out keyword
+            relationXML.append(sourceTerm);
             relationXML.append("\" Target=\"");
-            relationXML.append(target.getName().replace("out","")); //remove out keyword
+            relationXML.append(targetTerm);
 
             relationMatrix = new StringBuilder(relationMatrix.deleteCharAt(relationMatrix.lastIndexOf(",")));
             relationXML.append("\"/>\n\t<Matrix>\n\t\t");
@@ -475,30 +490,5 @@ public class Relation extends Relationals{
             relationXML.append("</Relation>");
 
             return relationXML.toString();
-    }
-
-    public SetObject getDom() {
-        return source;
-    }
-    public SetObject getCod() {
-        return target;
-    }
-    public Basis getAlgebra() {
-        return truth;
-    }
-    public Typeterm getSourceTerm() {
-        return sourceTerm;
-    }
-
-    public Typeterm getTargetTerm() {
-        return targetTerm;
-    }
-
-    public Basis getTruth() {
-        return truth;
-    }
-
-    public Map<String, SetObject> getParams() {
-        return params;
     }
 }

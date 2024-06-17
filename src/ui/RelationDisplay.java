@@ -4,16 +4,18 @@ import relations.Relation;
 
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.MouseInfo;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
+import java.awt.geom.AffineTransform;
 import java.util.Arrays;
 import java.util.function.Function;
-import javax.swing.DefaultCellEditor;
-import javax.swing.JLabel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.JViewport;
-import javax.swing.ScrollPaneConstants;
+import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableColumnModel;
@@ -29,14 +31,22 @@ import javax.swing.table.TableColumnModel;
 
 public class RelationDisplay extends JScrollPane {
 
+    public static RelationDisplay RELATIONDISPLAY = null;
+
+    public static RelationDisplay getInstance() {
+        if (RELATIONDISPLAY == null) RELATIONDISPLAY = new RelationDisplay();
+        return RELATIONDISPLAY;
+    }
     private final int ROW_HEIGHT = 32;
 
     private int numRowEls;
     private int numColEls;
     private Function<Integer,String> rowElements ;
     private Function<Integer,String> columnElements;
-    private Function<Integer,String> matrixElements;
+    private String[] matrixElements;
     private int[][] matrix;
+
+    private int zoomLevel = 0;
 
     private class MatrixTableModel extends AbstractTableModel {
 
@@ -59,7 +69,7 @@ public class RelationDisplay extends JScrollPane {
         }
 
         @Override
-        public Class<?> getColumnClass(int columnIndex) {
+        public Class<String> getColumnClass(int columnIndex) {
             return String.class;
         }
 
@@ -70,7 +80,7 @@ public class RelationDisplay extends JScrollPane {
 
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
-            return columnIndex==0? rowElements.apply(rowIndex) : matrixElements.apply(matrix[rowIndex][columnIndex-1]);
+            return columnIndex==0? rowElements.apply(rowIndex) : matrixElements[matrix[rowIndex][columnIndex-1]];
         }
 
         @Override
@@ -82,12 +92,12 @@ public class RelationDisplay extends JScrollPane {
         }
     }
 
-    public void setRelation(Relation rel) {
+    public void setRelation(Relation rel, JPanel panel, JButton accept, int[][] oldM) {
         this.numRowEls = rel.getDom().getNumElements();
         this.rowElements = rel.getDom()::getElementNames;
         this.numColEls = rel.getCod().getNumElements();
         this.columnElements = rel.getCod()::getElementNames;
-        this.matrixElements = rel.getAlgebra()::getElementNames;
+        this.matrixElements = rel.getAlgebra().getElementNames();
         this.matrix = rel.getMatrix();
         TableColumnModel columnModel = new DefaultTableColumnModel() {
             boolean column1 = true;
@@ -124,6 +134,28 @@ public class RelationDisplay extends JScrollPane {
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         table.setRowHeight(ROW_HEIGHT);
         table.setRowSelectionAllowed(false);
+
+        table.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent evt) {
+                int row = table.rowAtPoint(evt.getPoint());
+                int col = table.columnAtPoint(evt.getPoint());
+                int btn = evt.getButton();
+                if (btn == 1) {
+                    int val = matrix[row][col];
+                    val = (val == 0)? matrixElements.length - 1 : val - 1;
+                    matrix[row][col] = val;
+                    table.updateUI();
+                } else if (btn == 3) {
+                    int val = matrix[row][col];
+                    val = (val == matrixElements.length - 1)? 0 : val + 1;
+                    matrix[row][col] = val;
+                    table.updateUI();
+                }
+                accept.setEnabled(!Arrays.deepEquals(oldM, rel.getMatrix()));
+                panel.updateUI();
+            }
+        });
         DefaultCellEditor editor = new DefaultCellEditor(new JTextField()) {
             @Override
             public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
@@ -172,9 +204,14 @@ public class RelationDisplay extends JScrollPane {
         jv.setView(column1);
         jv.setPreferredSize(column1.getMaximumSize());
 
+
         this.getViewport().add(table);
         this.setRowHeader(jv);
         this.setCorner(ScrollPaneConstants.UPPER_LEFT_CORNER,column1.getTableHeader());
+    }
+
+    public int[][] getMatrix() {
+        return matrix;
     }
 
 }

@@ -74,5 +74,8 @@ public class HeytingAlgebraStorage{
     public void empty(){
         database.clear();
     }
+    public Map<String, HeytingAlgebra> getDatabase() {
+        return database;
+    }
 }
 

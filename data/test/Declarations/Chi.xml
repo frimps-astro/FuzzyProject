@@ -1,0 +1,4 @@
+<Declaration>
+    Chi (C:𝓟(A)->A) : A -> A = (C˘ ; (syQ(π˘ ⊔ ρ˘, ε))˘ ⊓ π˘);ρ
+</Declaration>
+<!--Chi: Definition 9-->

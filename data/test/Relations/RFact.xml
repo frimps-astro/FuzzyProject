@@ -1,0 +1,9 @@
+<Relation>
+    <Basis name="fbPlus"/>
+    <SetObject Source="A" Target="A"/>
+    <Matrix>
+        4,3,
+        2,4
+    </Matrix>
+</Relation>
+        <!--using a basis with a Plus in the form of min(x+y)-->

@@ -1,0 +1,3 @@
+<Declaration>
+    nPsi (R:A->A) : A -> A = (R - R˘) ⊓ (R˘ - R)
+</Declaration>

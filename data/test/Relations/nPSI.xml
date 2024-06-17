@@ -1,0 +1,8 @@
+<Relation>
+	<Basis name="nBasis"/>
+	<SetObject Source="A" Target="A"/>
+	<Matrix>
+		0,0,
+		0,0
+	</Matrix>
+</Relation>

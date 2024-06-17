@@ -5,28 +5,21 @@ import exceptions.UnificationException;
 import main.Basis;
 import main.VariableGenerator;
 import relations.Relation;
+import relterm.Relterm;
 import sets.SetObject;
 import typeterm.RelationType;
 import typeterm.Typeterm;
 import typeterm.UnitTerm;
 import java.util.*;
 
-public class Declaration {
+public class Declaration extends Declarationals {
     String name;
-
-    public Declaration(String name, RelationType resultType, LinkedHashMap<String, RelationType> vars, Relterm t) {
-        this.name = name;
-        this.resultType = resultType;
-        this.vars = vars;
-        this.t = t;
-    }
-
-    public Declaration() {
-    }
-
     RelationType resultType;
     LinkedHashMap<String, RelationType> vars;
     Relterm t;
+
+    public Declaration() {
+    }
 
     public RelationType type() throws TypingException {
         VariableGenerator gen = new VariableGenerator();
@@ -82,7 +75,6 @@ public class Declaration {
                 }
             });
 
-
         } catch (UnificationException e) {
             throw new RuntimeException(e);
         }
@@ -90,29 +82,32 @@ public class Declaration {
         return t.getType();
     }
 
-    public Relation execute(LinkedHashMap<String, Relation> rels, Map<String, SetObject> sets, Basis basis) {
-        LinkedHashMap<String, SetObject> newParams = new LinkedHashMap<>();
-        var relationsList = rels.values().stream().toList();
-        var varsList = vars.values().stream().toList();
+    public Relation execute(List<Relation> rels, Basis basis) throws UnificationException {
+        Map<String, SetObject> newParams = new HashMap<>();
+        Map<String, Relation> relsMap = new HashMap<>();
 
-        for (int i = 0; i < relationsList.size(); i++) {
-            Relation r = relationsList.get(i);
-            RelationType rt = varsList.get(i);
-
-            try {
-                Map<String, Typeterm> res1 = rt.source.matchTo(r.getSourceTerm());
-                Map<String, Typeterm> res2 = rt.target.substitute(res1).matchTo(r.getTargetTerm().substitute(res1));
-                res1.putAll(res2);
-                t.substituteInType(res1);
-
-                newParams.putAll(r.getParams());
-
-            } catch (UnificationException e) {
-                throw new RuntimeException(e);
+        int index = 0;
+        for(Map.Entry<String,RelationType> varEntry : vars.sequencedEntrySet()) {
+            Relation r = rels.get(index);
+            RelationType rt = varEntry.getValue();
+            relsMap.put(varEntry.getKey(), r);
+            Map<String, Typeterm> res1 = rt.source.matchTo(r.getSourceTerm());
+            Map<String, Typeterm> res2 = rt.target.matchTo(r.getTargetTerm());  
+            for(String var : res2.keySet()) {
+                Typeterm other = res2.get(var);
+                if (res1.containsKey(var)) {
+                    if (!res1.get(var).equals(other)) {
+                        throw new UnificationException("Multiple terms for same variable in Declaration");
+                    }
+                } else {
+                    res1.put(var,other);
+                }
             }
+            t.substituteInType(res1);
+            newParams.putAll(r.getParams());
+            index++;
         }
-
-        return t.execute(rels, newParams, basis);
+        return t.execute(relsMap, newParams, basis);
     }
 
     @Override
@@ -123,5 +118,21 @@ public class Declaration {
                 ", vars=" + vars +
                 ", t=" + t +
                 '}';
+    }
+
+    public LinkedHashMap<String, RelationType> getVars() {
+        return vars;
+    }
+
+    @Override
+    public String toXMLString() {
+        StringBuilder declarationBuilder = new StringBuilder();
+        declarationBuilder.append("<Declaration>\n");
+
+        declarationBuilder.append("\t"+this.declaration);
+
+        declarationBuilder.append("</Declaration>");
+
+        return declarationBuilder.toString();
     }
 }

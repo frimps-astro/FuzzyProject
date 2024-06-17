@@ -36,7 +36,6 @@ public class Meet extends Relterm {
             subst.putAll(subst2);
             env.forEach((var,type) -> type.substitute(subst));
             cons.forEach(type -> type.substitute(subst));
-            System.out.println(cons);
         } catch (UnificationException e) {
             throw new TypingException(e.getMessage());
         }
@@ -63,8 +62,8 @@ public class Meet extends Relterm {
     }
 
     @Override
-    public Relation execute(Map<String, Relation> rels, Map<String, SetObject> sets, Basis basis) {
-       return left.execute(rels, sets, basis).meet(right.execute(rels, sets, basis));
+    public Relation execute(Map<String, Relation> rels, Map<String, SetObject> params, Basis basis) {
+        return left.execute(rels, params, basis).meet(right.execute(rels, params, basis));
     }
 
     @Override

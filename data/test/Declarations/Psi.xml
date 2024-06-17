@@ -1,0 +1,4 @@
+<Declaration>
+    Psi (R:A->A) : A -> A = (R - R˘) + (R ⊓ R˘)
+</Declaration>
+        <!--Psi: Definition 12-->

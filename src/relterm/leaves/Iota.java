@@ -39,12 +39,12 @@ public class Iota extends Relterm {
 
     @Override
     public String toStringPrec(int prec) {
-        return "\u0399";
+        return "\u03B9";
     }
 
     @Override
-    public Relation execute(Map<String, Relation> rels, Map<String, SetObject> sets, Basis basis) {
-        return Relation.iota(((Sum)type.target).getLeft(), ((Sum)type.target).getRight(), sets, basis);
+    public Relation execute(Map<String, Relation> rels, Map<String, SetObject> params, Basis basis) {
+        return Relation.iota(((Sum)type.target).getLeft(), ((Sum)type.target).getRight(), params, basis);
     }
 
     @Override

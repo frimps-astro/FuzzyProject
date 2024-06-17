@@ -9,12 +9,8 @@ import static org.jparsec.Parser.newReference;
 import org.jparsec.Parsers;
 
 public class TypetermParser {
-
-    private static final String[] SYMBOLS = { "(", ")", "+", "*", "P"};
-
-
+    private static final String[] SYMBOLS = { "(", ")", "+", "*", "\uD835\uDCDF"};
     private static final Terminals operators = Terminals.operators(SYMBOLS);
-
     private static TypetermParser parser;
 
     public static TypetermParser getTypeParser() {
@@ -30,7 +26,7 @@ public class TypetermParser {
         Parser.Reference<Typeterm> ref = newReference();
         Parser<Typeterm> term =
                 ref.lazy().between(operators.token("("), operators.token(")"))
-                        .or(Parsers.sequence(operators.token("P"),ref.lazy().between(operators.token("("),
+                        .or(Parsers.sequence(operators.token("\uD835\uDCDF"),ref.lazy().between(operators.token("("),
                                 operators.token(")")),(t,p) -> new Power(p)))
                         .or(Terminals.Identifier.PARSER.map(TypeVariable::new));
         Parser<Typeterm> parser = new OperatorTable<Typeterm>()

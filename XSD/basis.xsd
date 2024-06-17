@@ -9,6 +9,7 @@
                     </xs:complexType>
                 </xs:element>
                 <xs:element name="Star" minOccurs="1" maxOccurs="1"/>
+                <xs:element name="Plus" minOccurs="1" maxOccurs="1"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

@@ -29,25 +29,28 @@ public class BasisXMLReader extends XMLReader<Basis> implements XMLNodeConverter
     public Basis convertXMLNode(Node node) {
         List<Node> childNodes = getChildNodes(node);
         HeytingAlgebra heytingAlgebra = HeytingAlgebraStorage.getInstance().load(getStringAttribute(childNodes.get(0),"name"));
-        int[][] star  = star(childNodes.get(1).getTextContent().trim().strip().split("\n"));
+        int[][] star  = getMatrix(childNodes.get(1).getTextContent().trim().strip().split("\n"));
+        int[][] plus  = getMatrix(childNodes.get(2).getTextContent().trim().strip().split("\n"));
 
-        return new Basis(heytingAlgebra, star);
+        return new Basis(heytingAlgebra, star, plus);
     }
 
-    private int[][] star(String[] data){
+    private int[][] getMatrix(String[] data){
         try{
             if (data == null || data[0].isBlank())
-                throw new EmptyNodesException("Basis XML cannot have an empty Start node");
+                throw new EmptyNodesException("Basis XML cannot have an empty Star/Plus node");
 
-            int[][] starMatrix = new int[2][2];
+            int s = data.length;
+            int t = data[0].trim().split(",").length;
+            int[][] matrix = new int[s][t];
 
-            for (int j = 0; j < 2; j++) {
-                String[] starData = data[j].strip().split(",");
-                for (int i = 0; i < 2; i++) {
-                    starMatrix[j][i] = Integer.parseInt(starData[i]);
+            for (int j = 0; j < s; j++) {
+                String[] starData = data[j].trim().strip().split(",");
+                for (int i = 0; i < t; i++) {
+                    matrix[j][i] = Integer.parseInt(starData[i]);
                 }
             }
-        return starMatrix;
+        return matrix;
         } catch (EmptyNodesException ex){
             throw new RuntimeException(ex);
         }

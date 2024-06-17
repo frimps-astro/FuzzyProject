@@ -1,3 +1,4 @@
+import relterm.Declaration;
 import exceptions.TypingException;
 import main.Project;
 import relations.Relation;
@@ -48,7 +49,7 @@ public class Main_ {
 //        for (int i = 0; i < genCounter; i++) {
 //            System.out.println(new TypeVariable(gen.newVarName()));
 //        }
-        String dec = "Choice (R:A->A) : P(A) -> A = ε\\R˘⊓ε˘";
+        String dec = "Choice (R:A->A) : \uD835\uDCDF(A) -> A = ε\\R˘⊓ε˘";
         Declaration declaration = DeclarationParser.getTypeParser().parse(dec);
         out.println(declaration);
 //        declaration.execute(rels, sets/params, basis)
@@ -64,7 +65,7 @@ public class Main_ {
 ////        //LOAD and DISPLAY the RHO RELATION under the USER project
         Relation rho = RelationStorage.getInstance().load("rho");
         RelationDisplay relationDisplay = new RelationDisplay();
-        relationDisplay.setRelation(rho);
+//        relationDisplay.setRelation(rho);
 //        userInterface.addLeftComponent(relationDisplay);
 //        DeclarationExecution.testinterface();
 

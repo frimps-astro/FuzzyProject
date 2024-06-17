@@ -1,0 +1,4 @@
+<Declaration>
+    Choice (C:𝓟(A)->A) : 𝓟(A) -> A = (ε\ε;C) ⊓ ε˘
+</Declaration>
+<!--Normal: Definition 7-->

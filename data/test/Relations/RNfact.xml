@@ -1,0 +1,9 @@
+<Relation>
+    <Basis name="fuzzyBasis"/>
+    <SetObject Source="A" Target="A"/>
+    <Matrix>
+        4,0,
+        0,4
+    </Matrix>
+</Relation>
+        <!--using basis with plus as join-->

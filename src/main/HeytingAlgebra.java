@@ -56,6 +56,9 @@ public class HeytingAlgebra implements XMLObject{
     public int[][] getJoin() {
         return join;
     }
+    public int[][] getMeet() {
+        return meet;
+    }
 
     public HeytingAlgebra(int numElements, String[] elementNames, int[][] meet, int[][] join) {
         this.numElements = numElements;
@@ -133,10 +136,7 @@ public class HeytingAlgebra implements XMLObject{
             meetStr.append("\n");
             implStr.append("\n");
         }
-        return "Number of Elements: " + numElements + " elements: " + Arrays.toString(elementNames)
-                + "\nmeet:\n" + meetStr + "\njoin:\n" + joinStr
-                + "\nimpl:\n" + implStr
-                + "\nbot: " + bot + " top: " + top;
+        return STR."Number of Elements: \{numElements} elements: \{Arrays.toString(elementNames)}\nmeet:\n\{meetStr}\njoin:\n\{joinStr}\nimpl:\n\{implStr}\nbot: \{bot} top: \{top}";
     }
 
     private void computeBotTop(){

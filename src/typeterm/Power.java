@@ -17,7 +17,7 @@ public class Power extends Typeterm {
 
     @Override
     public String toStringPrec(int prec) {
-        return "P(" + body.toStringPrec(0) + ")";
+        return "\uD835\uDCDF(" + body.toStringPrec(0) + ")";
     }
 
     @Override
@@ -33,18 +33,41 @@ public class Power extends Typeterm {
     public Typeterm getBody() {
         return body;
     }
-
+    
     @Override
-    public SetObject execute(Map<String, SetObject> params, Basis basis) {
-        return new PowerSetObject(body.execute(params, basis), basis);
+    public int hashCode() {
+        int hash = 7;
+        hash = 83 * hash + body.hashCode();
+        return hash;
     }
 
     @Override
-    public void unify(boolean unify, Typeterm other, Map<String, Typeterm> unifier) throws UnificationException {
-        if (unify && other instanceof TypeVariable){
-            other.unify(true, this, unifier);
+    public boolean equals(Object obj) {
+        boolean result = false;
+        if (obj instanceof Power other) {
+            result = body.equals(other.body);
+        }
+        return result;
+    }
+
+    @Override
+    public SetObject execute(Map<String, SetObject> params, Basis basis) {
+        return new PowerSetObject(body.execute(params, basis));
+    }
+
+    @Override
+    public void unify(Typeterm other, Map<String, Typeterm> unifier) throws UnificationException {
+        if (other instanceof TypeVariable){
+            other.unify(this, unifier);
         } else if (other instanceof Power otherPower){
-            body.unify(unify, otherPower.body, unifier);
+            body.unify(otherPower.body, unifier);
         } else throw new UnificationException("Cannot unify " + this + " and " + other + ".");
+    }
+    
+    @Override
+    public void matchTo(Typeterm other, Map<String, Typeterm> unifier) throws UnificationException {
+        if (other instanceof Power otherPower) {
+            body.matchTo(otherPower.body, unifier);
+        } else throw new UnificationException("Cannot match " + this + " and " + other + ".");
     }
 }

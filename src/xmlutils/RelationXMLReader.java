@@ -15,6 +15,7 @@ import storage.SetObjectStorage;
 import typeterm.Typeterm;
 import typeterm.TypetermParser;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,6 +45,7 @@ public class RelationXMLReader extends XMLReader<Relation> implements XMLNodeCon
         Typeterm targetTerm = TypetermParser.getTypeParser().parse(getStringAttribute(clist.get(1),"Target"));
 
         Map<String, SetObject> params = new HashMap<>();
+
         sourceTerm.variables().forEach(var -> {
             SetObject setObject = SetObjectStorage.getInstance().load(var);
             params.put(setObject.getName(), setObject);
@@ -55,8 +57,9 @@ public class RelationXMLReader extends XMLReader<Relation> implements XMLNodeCon
         });
 
         String[] data = clist.get(2).getTextContent().trim().strip().split("\n");
+
         int s = data.length;
-        int t = data[0].split(",").length;
+        int t = data[0].trim().split(",").length;
         int[][] matrix  = matrix(data, s, t);
 
         return new Relation(sourceTerm, targetTerm, params, basis, matrix);
@@ -70,7 +73,7 @@ public class RelationXMLReader extends XMLReader<Relation> implements XMLNodeCon
             int[][] starMatrix = new int[s][t];
 
             for (int j = 0; j < s; j++) {
-                String[] starData = data[j].strip().split(",");
+                String[] starData = data[j].trim().strip().split(",");
                 for (int i = 0; i < t; i++) {
                     starMatrix[j][i] = Integer.parseInt(starData[i]);
                 }

@@ -1,0 +1,3 @@
+<Declaration>
+    IncompatibleA (K:A->A, R:A->A) : A -> A = K + R
+</Declaration>

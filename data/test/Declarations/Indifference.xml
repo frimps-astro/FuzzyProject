@@ -1,0 +1,4 @@
+<Declaration>
+    Indifference (R:A->A) : A -> A = R ⊓ R˘
+</Declaration>
+        <!--Indifference: Definition 13 I-->

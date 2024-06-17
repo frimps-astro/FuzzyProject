@@ -79,6 +79,10 @@ public class SetObjectStorage{
         database.clear();
     }
 
+    public Map<String, SetObject> getDatabase(){
+        return database;
+    }
+
     public void createSumSetObject(String name, String leftComponent, String rightComponent){
         try {
             SetObject left = database.get(leftComponent);
@@ -126,7 +130,7 @@ public class SetObjectStorage{
             if (body == null || basis == null)
                 throw new OperationExecutionException("Both components of the Power Set must exist");
 
-            PowerSetObject powerSetObject = new PowerSetObject(name, body, basis);
+            PowerSetObject powerSetObject = new PowerSetObject(name, body);
             this.save(powerSetObject.getName(), powerSetObject.toXMLString());
         } catch (OperationExecutionException | IOException e){
             throw new RuntimeException(e);

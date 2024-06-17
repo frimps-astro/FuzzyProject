@@ -1,0 +1,4 @@
+<Declaration>
+    Strict (R:A->A) : A -> A = R - R˘
+</Declaration>
+        <!--Strict: Definition 13 P-->

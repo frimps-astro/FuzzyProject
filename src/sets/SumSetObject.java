@@ -55,7 +55,6 @@ public class SumSetObject extends SetObject {
     }
 
     public String toString() {
-        return "\nNumber of Left Elements: " + left.getNumElements() + " Left Elements: " + Arrays.toString(left.getElementNames())
-                +"\nNumber of Right Elements: " + right.getNumElements() + " Right Elements: " + Arrays.toString(right.getElementNames());
+        return STR."\nNumber of Left Elements: \{left.getNumElements()} Left Elements: \{Arrays.toString(left.getElementNames())}\nNumber of Right Elements: \{right.getNumElements()} Right Elements: \{Arrays.toString(right.getElementNames())}";
     }
 }

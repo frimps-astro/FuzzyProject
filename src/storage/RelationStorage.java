@@ -8,7 +8,9 @@ import xmlutils.RelationXMLReader;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static classutils.LoadPaths.RELATIONPATH;
@@ -35,6 +37,7 @@ public class RelationStorage {
                     + RELATIONPATH + filename + ".xml"));
             result.setName(filename);
 
+
             System.out.println("saving "+ filename + " to storage");
             database.put(filename, result);
             return result;
@@ -58,6 +61,11 @@ public class RelationStorage {
             database.put(filename, rel);
         }
     }
+    public void forcePut(Relation rel){
+        String filename = rel.getName();
+        System.out.println("overwriting "+ filename + " in storage");
+        database.put(filename, rel);
+    }
 
     public Relation get(String filename){
         try {
@@ -70,13 +78,27 @@ public class RelationStorage {
     }
 
     public String[] getEntityNames(){
-        return database.keySet().toArray(new String[0]);
+        List<String> data = new ArrayList<>();
+        database.forEach((k, v) -> {
+            data.add(STR."\{k} : [\{v.getTruth().getName()}] \{v.getSourceTerm()}->\{v.getTargetTerm()}");
+        });
+        return data.toArray(new String[0]);
+    }
+    public void delete(Relation rel) {
+        String filename = rel.getName();
+        if (database.containsKey(filename)){
+            System.out.println("removing "+ filename + " from storage");
+            database.remove(filename, rel);
+            System.out.println(STR."removing \{filename} from disk");
+            File deleteRel = new File(STR."\{DATAPATH}\{Project.getInstance().getName()}\{RELATIONPATH}\{filename}.xml");
+            deleteRel.delete();
+        }
     }
     public void empty(){
         database.clear();
     }
 
-    public Map<String, Relation> loadRelation(){
+    public Map<String, Relation> getDatabase(){
         return database;
     }
 }

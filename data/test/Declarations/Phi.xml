@@ -1,0 +1,4 @@
+<Declaration>
+    Phi (R:A->A) : 𝓟(A) -> A = ε\R˘⊓ε˘
+</Declaration>
+<!--Phi: Definition 8-->

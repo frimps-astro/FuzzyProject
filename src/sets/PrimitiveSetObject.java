@@ -31,7 +31,7 @@ public class PrimitiveSetObject extends SetObject {
 
     @Override
     public String toString() {
-        return "Number of Elements: " + elementNames.length + " elements: " + Arrays.toString(elementNames);
+        return STR."PrimitiveSetObject{name='\{name}\{'\''}, elementNames=\{Arrays.toString(elementNames)}, numberOfElements=\{this.getNumElements()}\{'}'}";
     }
 }
 

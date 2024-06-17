@@ -1,6 +1,6 @@
 <Relation>
 	<Basis name="HA"/>
-	<SetObject Source="AxB" Target="B"/>
+	<SetObject Source="A*B" Target="B"/>
 	<Matrix>
 		1,0,0,
 		0,1,0,

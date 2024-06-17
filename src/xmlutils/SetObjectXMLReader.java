@@ -52,7 +52,7 @@ public class SetObjectXMLReader extends XMLReader<SetObject> implements XMLNodeC
                 List<Node> clist = getChildNodes(node);
                 SetObject body = SetObjectStorage.getInstance().load(getStringAttribute(clist.get(0),"body"));
                 Basis basis = BasisStorage.getInstance().load(getStringAttribute(clist.get(1),"basis"));
-                return new PowerSetObject(body, basis);
+                return new PowerSetObject(body);
             }
         }
         return null;

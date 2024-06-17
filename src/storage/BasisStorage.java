@@ -75,5 +75,9 @@ public class BasisStorage{
     public void empty(){
         database.clear();
     }
+
+    public Map<String, Basis> getDatabase(){
+        return database;
+    }
 }
 

@@ -1,0 +1,3 @@
+<Declaration>
+    Test (R:A->A, K:B->B) : 𝓟(B) -> B = ε\R˘⊓ε˘
+</Declaration>

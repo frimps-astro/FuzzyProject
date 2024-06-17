@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.rmi.server.UID;
 
 import static classutils.LoadPaths.DATAPATH;
 import static ui.utils.UIConstants.*;
@@ -46,28 +47,23 @@ public class UserInterface extends JFrame{
         setLayout(null);
         setVisible(true);
         setResizable(false);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         addWindowListener(UIMethods.getInstance().windowEvent());
     }
 
     private void loadProjectAction(ActionEvent e){
-        JFrame ui = INTERFACES.get("ProjectUI");
-       if(ui == null) {
-            if (projectsList.getSelectedIndex() != 0) {
-                PROJECTNAME = projectsList.getSelectedItem().toString();
+        if (projectsList.getSelectedIndex() != 0) {
+            PROJECTNAME = projectsList.getSelectedItem().toString();
 
-                project = Project.getInstance();
-                project.setName(PROJECTNAME);
-                project.setProject();
+            project = Project.getInstance();
+            project.setName(PROJECTNAME);
+            project.setProject();
 
-                new Dialog(new ProjectUI());
-            } else {
-                UIDialogs.getInstance().notifyDialog("Please select a project to load", getBounds());
-            }
+            new Dialog(new ProjectUI());
+            this.dispose();
         } else {
-           ui.toFront();
-           ui.repaint();
-       }
+            UIDialogs.getInstance().notifyDialog("Please select a project to load");
+        }
     }
 
     private JComponent newProject(){
@@ -81,7 +77,7 @@ public class UserInterface extends JFrame{
     }
 
     private void createNewProject(String name){
-        String[] directories = {"/Basis", "/HeytingAlgebras", "/SetObjects", "/Relations"};
+        String[] directories = {"/Basis", "/HeytingAlgebras", "/SetObjects", "/Relations", "/Declarations"};
         String projectPath = DATAPATH + name;
         int counter = 0;
 
@@ -94,7 +90,7 @@ public class UserInterface extends JFrame{
                 }
             }
 
-            if (counter == 4)
+            if (counter == 5)
                 projectsList.addItem(name);
             else
                 deleteProjectDirectory(new File(projectPath));
@@ -120,8 +116,13 @@ public class UserInterface extends JFrame{
         JButton createBtn = new JButton("Create");
         createBtn.setSize(BUTTONWIDTH, BUTTONHEIGHT);
         createBtn.addActionListener(e -> {
-                createNewProject(projectNameField.getText());
+            String pname = projectNameField.getText().strip();
+            if (pname.length() > 2){
+                createNewProject(pname);
                 modelDialog.setVisible(false);
+            } else {
+                UIDialogs.getInstance().notifyDialog("Provide a meaningful project name");
+            }
         });
 
         dialogContainer.add(projectNameLabel, BorderLayout.PAGE_START);
