@@ -1,9 +1,0 @@
-<Relation>
-	<Basis name="HA"/>
-	<SetObject Source="B" Target="B"/>
-	<Matrix>
-		1,1,1,
-		1,1,1,
-		1,1,1
-	</Matrix>
-</Relation>
