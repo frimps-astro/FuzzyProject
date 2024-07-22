@@ -1,4 +1,4 @@
-w<Relation>
+<Relation>
     <Basis name="testBasis"/>
     <SetObject Source="Cars" Target="Cars"/>
     <Matrix>
